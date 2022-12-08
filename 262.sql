@@ -1,16 +1,14 @@
 #https://leetcode.com/problems/trips-and-users/
 SELECT t.request_at as Day, 
-COUNT(CASE status WHEN 'cancelled_by_driver' THEN 1 ELSE NULL END)/
-COUNT(CASE status WHEN 'completed' THEN 1 ELSE NULL END)
-as Cancellation
+round((COUNT(CASE when t.status <> "completed" THEN 1 ELSE NULL END)/
+COUNT(*)),2) as Cancellation_Rate
 FROM trips t
-INNER JOIN users u
+LEFT JOIN users u
 ON t.driver_id=u.users_id
-WHERE u.banned='No'
-GROUP BY t.request_at;
-
-This above solution is correct; however, WHERE u.banned='No' does not filter banned users. 
-How to fix this?
+AND u.banned='No'
+AND DATEDIFF(request_at, '2013-10-01')>=0 
+AND DATEDIFF('2013-10-03 ', request_at)>=0
+GROUP BY request_at;
 
 ----------------------------
 # Final Solution:
