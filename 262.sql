@@ -10,5 +10,6 @@ AND DATEDIFF(request_at, '2013-10-01')>=0
 AND DATEDIFF('2013-10-03 ', request_at)>=0
 GROUP BY request_at;
 
-----------------------------
-# Final Solution:
+# Currently solves everything except for the output days are reversed
+
+
