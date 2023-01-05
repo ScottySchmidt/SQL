@@ -15,6 +15,7 @@ JOIN view_stats v on ch.challenge_id=v.challenge_id
 JOIN submission_stats s ON ch.challenge_id=s.challenge_id
 GROUP BY c.contest_id, col.college_id, c.name, c.hacker_id
 HAVING
-SUM(s.total_submissions+s.total_accepted_submissions+v.total_views+v.total_unique_views) 
+SUM(s.total_submissions+s.total_accepted_submissions+v.total_views+v.total_unique_views)>0 
 ORDER BY c.contest_id ASC
+;
 ;
