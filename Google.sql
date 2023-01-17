@@ -1,4 +1,7 @@
 # https://datalemur.com/questions/odd-even-measurements
+# Assume you are given the table containing measurement values obtained from a Google sensor over several days. 
+# Measurements are taken several times within a given day.
+# Write a query to obtain the sum of the odd-numbered and even-numbered measurements on a particular day, in two different columns.
 
 # Error must appear in the GROUP BY clause or be used in an aggregate function
 # Solved https://stackoverflow.com/questions/19601948/must-appear-in-the-group-by-clause-or-be-used-in-an-aggregate-function
