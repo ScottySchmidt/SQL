@@ -1,6 +1,6 @@
-Y-on-Y Growth Rate [Wayfair SQL Interview Question]
+Y-over-Y Growth Rate [Wayfair SQL Interview Question]
 https://datalemur.com/questions/yoy-growth-rate
-This is my first hard problem, first time LAG window_function.
+My first hard problem, first problem with LAG window_function.
 Need to reattempt the problem again had to use a hint
 
 ========================================
