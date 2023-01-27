@@ -9,9 +9,44 @@ Hint: An active user is a user who has user action ("sign-in", "like", or "comme
 in the current month and last month.
 
 FIRST SQL HARD PROBLEM. 
-Keeping record of failed attempts. 
+This problem was hard. In fact, my current solution below takes 50 codes of line which seems too long.
+I would likely need a better solution althought it gets the correct solution
 */
 
+---First Working Solution:
+with facebook as (
+SELECT user_id,
+EXTRACT(MONTH FROM event_date) as m,
+EXTRACT(YEAR FROM event_date) as y
+FROM user_actions
+),
+
+cur_month as(
+SELECT m as month, user_id
+FROM facebook
+WHERE m=7
+AND y=2022
+GROUP BY user_id, m, y
+),
+
+prev_month as (
+SELECT m, user_id
+FROM facebook
+WHERE m=6
+AND y=2022
+GROUP BY user_id, m, y
+),
+
+active AS (SELECT month, user_id
+FROM cur_month
+JOIN prev_month
+USING (user_id)
+)
+
+SELECT month, count(user_id) as monthly_active_users
+FROM active
+GROUP BY month
+;
 
 ---FAILED ATTEMPT 1 
 ---I had the right idea but definitely too complex has to be a better way
