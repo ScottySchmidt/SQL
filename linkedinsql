@@ -15,3 +15,15 @@ HAVING (count(*)>1)
 )
 SELECT count(DISTINCT company_id) as duplicate_companies
 FROM linkedin
+
+
+
+/* 
+Unfinished Parts [Tesla SQL Interview Question]
+https://datalemur.com/questions/tesla-unfinished-parts
+
+Another easy problem but because it deals with missing values important. 
+/*
+
+SELECT DISTINCT part FROM parts_assembly
+WHERE finish_date is NULL;
