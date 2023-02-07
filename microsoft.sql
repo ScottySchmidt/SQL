@@ -21,3 +21,26 @@ GROUP BY sender_id
 ORDER BY count(sender_id) DESC
 LIMIT 2
 ;
+
+
+App Click-through Rate (CTR) [Facebook SQL Interview Question]
+https://datalemur.com/questions/click-through-rate
+
+with fb as (SELECT app_id, 
+EXTRACT(year FROM timestamp) as yr,
+event_type
+FROM events
+WHERE EXTRACT(year FROM timestamp) =2022
+),
+
+fb2 as (SELECT app_id, 
+CASE WHEN event_type='click' THEN 1 ELSE 0 END as click,
+CASE WHEN event_type='impression' THEN 1 ELSE 0 END as impress
+FROM fb
+)
+
+SELECT app_id, 
+round((100.0*sum(click))/sum(impress), 2)
+FROM fb2
+GROUP BY app_id
+;
