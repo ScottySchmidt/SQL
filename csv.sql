@@ -1,5 +1,5 @@
 Pharmacy Analytics (Part 1) [CVS Health SQL Interview Question]
-
+Top three most profitable drugs
 --------------------
 with cvs as(SELECT product_id, drug, 
 sum(total_sales) as sales, 
