@@ -12,16 +12,19 @@ This problem is considered HARD level even thought it looks easy.
 It is indeed challenging as one must use GENERATE SERIES.
 Table1 will create GROUP by serach then product that same number
 the amount of num_users.
+
+Below is the most concise solution that makes sense without having to write 50 lines of code.
+Searches will be produced num_users times. 
+Then the select statement finds the mediam.
 */
  
- WITH t1 as( SELECT searches
-  FROM search_frequency
-  GROUP BY 
-    searches, 
-    GENERATE_SERIES(1, num_users)
-    )
-    
-    SELECT PERCENTILE_CONT(0.5)
-    WITHIN GROUP (ORDER BY searches)
-    FROM t1
-    ;
+ 
+with google as
+(SELECT searches, GENERATE_SERIES(1, num_users)
+FROM search_frequency
+order by searches)
+
+select PERCENTILE_CONT(0.5) WITHIN group (order by searches) from google;
+ 
+ 
+ 
