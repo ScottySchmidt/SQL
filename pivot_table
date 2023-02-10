@@ -4,7 +4,11 @@ The output column headers should be Doctor, Professor, Singer, and Actor, respec
 Note: Print NULL when there are no more names corresponding to an occupation.
 
 Need more pratice with pivot tables had to do lots of research and did not use the pivot way.
-Using the pivot way is more useful instead of using hundreds of potential case statements that could change.
+Will attempt this problem again shortly as pivot tables are very pracatical. 
+
+Notes:
+1. Must use max (or min) since there is a groupby clause. 
+2. Using the pivot way is more useful instead of using hundreds of potential case statements that could change.
 -----------------
 
 SELECT 
@@ -12,7 +16,6 @@ max(CASE WHEN occupation='Doctor' THEN name END),
 max(CASE WHEN occupation='Professor' THEN name END),
 max(CASE WHEN occupation='Singer' THEN name END),
 max(CASE WHEN occupation='Actor' THEN name END)
-
 
 FROM (SELECT *, ROW_NUMBER() OVER(PARTITION BY occupation ORDER BY name) as rn
       FROM occupations
