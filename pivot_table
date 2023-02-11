@@ -17,7 +17,7 @@ max(CASE WHEN occupation='Professor' THEN name END),
 max(CASE WHEN occupation='Singer' THEN name END),
 max(CASE WHEN occupation='Actor' THEN name END)
 
-FROM (SELECT *, ROW_NUMBER() OVER(PARTITION BY occupation ORDER BY name) as rn
+FROM (SELECT name, occupation, ROW_NUMBER() OVER(PARTITION BY occupation ORDER BY name) as rn
       FROM occupations
      ) t
      
