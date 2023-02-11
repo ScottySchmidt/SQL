@@ -8,7 +8,10 @@ Will attempt this problem again shortly as pivot tables are very pracatical.
 
 Notes:
 1. Must use max (or min) since there is a groupby clause. 
-2. Using the pivot way is more useful instead of using hundreds of potential case statements that could change.
+2. Most use the rownumber () order by name so pivot table can be sorted by name.
+3. Using the pivot way is more useful instead of using hundreds of potential case statements that could change.
+
+Solution without pivot using case statements:
 -----------------
 
 SELECT 
