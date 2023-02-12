@@ -11,7 +11,7 @@ Notes:
 2. Most use the rownumber () order by name so pivot table can be sorted by name.
 3. Using the pivot way is more useful instead of using hundreds of potential case statements that could change.
 
-Solution without pivot using case statements:
+---Solution without pivot using case statements:
 -----------------
 
 SELECT 
@@ -25,3 +25,17 @@ FROM (SELECT name, occupation, ROW_NUMBER() OVER(PARTITION BY occupation ORDER B
      ) t
      
 GROUP BY rn
+
+------------------
+---Solution with PIVOT_TABLE SQL SERVER:
+SELECT Doctor, Professor, Singer, Actor
+FROM (SELECT name, occupation, 
+row_number() OVER (PARTITION BY occupation ORDER BY name ) as rn
+FROM occupations) t 
+pivot ( 
+    max(NAME)
+    FOR [OCCUPATION] IN ([Doctor], [Professor], [Singer],  [Actor])
+      ) p
+      ;
+
+
