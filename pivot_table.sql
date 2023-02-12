@@ -1,4 +1,4 @@
-https://www.hackerrank.com/challenges/occupations/problem?isFullScreen=true
+/* https://www.hackerrank.com/challenges/occupations/problem?isFullScreen=true
 Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. 
 The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
 Note: Print NULL when there are no more names corresponding to an occupation.
@@ -11,8 +11,9 @@ Notes:
 2. Most use the rownumber () order by name so pivot table can be sorted by name.
 3. Using the pivot way is more useful instead of using hundreds of potential case statements that could change.
 
----Solution without pivot using case statements:
------------------
+Solution without pivot using case statements
+--------------------
+*/
 
 SELECT 
 max(CASE WHEN occupation='Doctor' THEN name END),
@@ -26,7 +27,7 @@ FROM (SELECT name, occupation, ROW_NUMBER() OVER(PARTITION BY occupation ORDER B
      
 GROUP BY rn
 
-------------------
+
 ---Solution with PIVOT_TABLE SQL SERVER:
 SELECT Doctor, Professor, Singer, Actor
 FROM (SELECT name, occupation, 
