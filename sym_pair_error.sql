@@ -1,18 +1,23 @@
-https://www.hackerrank.com/challenges/symmetric-pairs/problem?isFullScreen=true
+/* https://www.hackerrank.com/challenges/symmetric-pairs/problem?isFullScreen=true
 Two pairs (X1, Y1) and (X2, Y2) are said to be symmetric pairs if X1 = Y2 and X2 = Y1.
 Write a query to output all such symmetric pairs in ascending order by the value of X. List the rows such that X1 ≤ Y1.
 
-My current solution is close even with research. 
-This pronlem is confusing to understand and will posted a newly corrected solution later.
----------------
+This problem took me some research to understand.
+Specifically, the line: HAVING COUNT(*)>1 OR a.X!=a.Y
 
-SELECT  t1.X, t1.Y
-FROM functions t1
-INNER JOIN functions t2
-WHERE (t1.X<t2.Y) AND 
-(t2.X=t1.Y)
-GROUP BY t1.X, t1.Y
-HAVING ( (t1.X=t1.Y) AND (count(*)>1) )
-OR (t1.X<t1.Y)
-ORDER BY t1.X
+This above code will find a pair that is a duplicate. 
+But then distinct will only count this pair once.
+The or statement is needed because typically a sym pair are not the same x is less than y.
+If I had more time I would be to a better understanding of sym pairs this problem definitely makes one think.
+*/ 
+
+---------------
+SELECT DISTINCT a.*
+FROM functions a
+INNER JOIN Functions b ON (a.X=b.Y AND a.Y=b.X)
+WHERE a.X <= a.Y
+GROUP BY a.X, a.Y
+HAVING COUNT(*)>1 OR a.X!=a.Y
+ORDER BY a.X
+;
 ;
