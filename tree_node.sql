@@ -1,6 +1,7 @@
 /*
 608. Tree Node
 https://leetcode.com/problems/tree-node/description/
+Amazon/Uber Interview Question
 
 Each node in the tree can be one of three types:
 "Leaf": if the node is a leaf node.
@@ -8,7 +9,8 @@ Each node in the tree can be one of three types:
 "Inner": If the node is neither a leaf node nor a root node.
 Write an SQL query to report the type of each node in the tree.
 
-The first time I forgot to do IS NOT NULL
+The first time I forgot to do IS NOT NULL.
+A NOT NULL p_id is a root.
 */
 
 SELECT id, 
