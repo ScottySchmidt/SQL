@@ -1,4 +1,10 @@
-# https://leetcode.com/problems/department-highest-salary/description/
+/*
+https://leetcode.com/problems/department-highest-salary/description/
+Write an SQL query to find employees who have the highest salary in each of the departments.
+-------------------------------------
+*/
+
+
 SELECT 
 Department.name as Department, 
 Employee.name as Employee,
