@@ -10,6 +10,7 @@ The query should print this information for each day of the contest, sorted by t
 -----------------
 */
 
+#This method below I realized will ignore the daily_count of users:
 select h.hacker_id ,h.name
 from submissions as s
 join hackers as h 
