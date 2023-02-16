@@ -7,6 +7,8 @@ Write a query to print total number of unique hackers who made at least  submiss
 Fnd the hacker_id and name of the hacker who made maximum number of submissions each day.
 If more than one such hacker has a maximum number of submissions, print the lowest hacker_id. 
 The query should print this information for each day of the contest, sorted by the date.
+
+Work in process. 
 -----------------
 */
 
@@ -21,7 +23,10 @@ FROM submissions
 WHERE submission_date LIKE '2016-03-01';
 
 DECLARE @subdate DATE;
+DECLARE @daybefore DATE;
 SET @subdate='2016-03-01';
+SET @daybefore='2016-03-01';
+
 
 WHILE @subdate<'2016-03-01'
 BEGIN
@@ -32,14 +37,16 @@ INSERT INTO @daily_hackers
 SELECT s.hacker_id, s.submission_date
 FROM @daily_hackers dh
 JOIN submissions s
-ON dh.hacker_id=s.hacker_id
+ON dh.hacker_id=s.hacker_id AND dh.submission_date LIKE @daybefore
 WHERE s.submission_date LIKE @subdate
 
+SET @daybefore=dateadd(day, 1, @daybefore);
 END
 
-SELECT hacker_id, submission_date
+SELECT submission_date, count(DISTINCT hacker_id)
 FROM @daily_hackers
-
+GROUP BY submission_date
+ORDER BY submission_date
 
 
 ---------------------------------------
