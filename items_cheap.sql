@@ -9,7 +9,7 @@ If more than one wand has same power, sort the result in order of descending age
 */ 
 
 with items as (SElECT w.id, wp.age, w.coins_needed, w.power, 
-rank() OVER(PARTITION BY wp.age ORDER BY w.coins_needed ASC) rn
+rank() OVER(PARTITION BY wp.age, w.power ORDER BY w.coins_needed ASC) rn
 FROM wands w
 JOIN wands_property wp
 ON w.code=wp.code
