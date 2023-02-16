@@ -10,21 +10,35 @@ The query should print this information for each day of the contest, sorted by t
 -----------------
 */
 
-#SETUP DAILY HACKERS TBL:
-DECLARE @daily_hackers TABLE (
-hacker_id INT,
-submission_date DATE
-);
+DECLARE @daily_hackers TABLE(
+    hacker_id INT,
+    submission_date DATE
+    );
+
+INSERT INTO @daily_hackers 
+SELECT hacker_id, submission_date
+FROM submissions
+WHERE submission_date LIKE '2016-03-01';
+
+DECLARE @subdate DATE;
+SET @subdate='2016-03-01';
+
+WHILE @subdate<'2016-03-01'
+BEGIN
+
+SET @subdate=dateadd(day, 1, @subdate)
 
 INSERT INTO @daily_hackers
-SELECT 
-hacker_id,
-submission_date
-FROM submissions 
-;
+SELECT s.hacker_id, s.submission_date
+FROM @daily_hackers dh
+JOIN submissions s
+ON dh.hacker_id=s.hacker_id
+WHERE s.submission_date LIKE @subdate
+
+END
 
 SELECT hacker_id, submission_date
-FROM @daily_hackers;
+FROM @daily_hackers
 
 
 
