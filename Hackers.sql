@@ -63,7 +63,7 @@ FROM base
 WHERE rn=1
 )
 
-SELECT a.submission_date, hack_count, m.hacker_id, m.name 
+SELECT a.submission_date, a.hack_count, m.hacker_id, m.name 
 FROM max_subs m
 INNER JOIN active_hackers a
 ON a.submission_date=m.submission_date
