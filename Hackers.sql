@@ -18,13 +18,14 @@ DECLARE @daily_hackers TABLE(
     submission_date DATE
     );
 
+DECLARE @subdate DATE;
+DECLARE @daybefore DATE;
+    
 INSERT INTO @daily_hackers 
 SELECT hacker_id, submission_date
 FROM submissions
 WHERE submission_date LIKE '2016-03-01';
 
-DECLARE @subdate DATE;
-DECLARE @daybefore DATE;
 SET @subdate='2016-03-01';
 SET @daybefore='2016-03-01';
 
@@ -43,7 +44,8 @@ BEGIN
 END;
 
 with active_hackers AS (
-SELECT submission_date, count(DISTINCT hacker_id) as hack_count FROM @daily_hackers
+SELECT submission_date, count(DISTINCT hacker_id) as hack_count 
+FROM @daily_hackers
 GROUP BY submission_date
 ),
 
