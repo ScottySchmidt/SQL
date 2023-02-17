@@ -47,25 +47,19 @@ SELECT submission_date, count(DISTINCT hacker_id) as hack_count FROM @daily_hack
 GROUP BY submission_date
 ),
 
-base as (
-SELECT s.submission_date, h.hacker_id, h.name, 
-rank() OVER(PARTITION BY s.submission_date ORDER BY count(h.hacker_id)) as rn 
+max_sub as ( SELECT h.hacker_id, h.name, s.submission_date, 
+row_number() OVER(PARTITION BY submission_date ORDER BY count(h.hacker_id) DESC, h.hacker_id ASC) as rn 
 FROM hackers h
-JOIN submissions s
+INNER JOIN submissions s
 ON h.hacker_id=s.hacker_id
-GROUP BY s.submission_date, h.hacker_id, h.name 
-),
+GROUP BY h.hacker_id, h.name, s.submission_date
+)           
 
-most_subs as (
-SELECT submission_date, hacker_id, name
-FROM base
-WHERE rn=1
-)
-
-SELECT m.submission_date, m.hacker_id, m.name 
-FROM most_subs m
-JOIN @daily_hackers d
-ON d.submission_date=m.submission_date
+SELECT a.submission_date, hack_count, m.hacker_id, m.name 
+FROM max_subs m
+INNER JOIN active_hackers a
+ON a.submission_date=m.submission_date
+WHERE m.rn=1
 ;
 
 
