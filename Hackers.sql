@@ -27,6 +27,65 @@ DECLARE @daybefore DATE;
 SET @subdate='2016-03-01';
 SET @daybefore='2016-03-01';
 
+WHILE @subdate<'2016-03-01'
+BEGIN
+    SET @subdate=dateadd(day, 1, @subdate)
+
+    INSERT INTO @daily_hackers
+    SELECT s.hacker_id, s.submission_date
+    FROM @daily_hackers dh
+    JOIN submissions s
+    ON dh.hacker_id=s.hacker_id AND dh.submission_date LIKE @daybefore
+    WHERE s.submission_date LIKE @subdate
+
+    SET @daybefore=dateadd(day, 1, @daybefore);
+END;
+
+with active_hackers AS (
+SELECT submission_date, count(DISTINCT hacker_id) as hack_count FROM @daily_hackers
+GROUP BY submission_date
+),
+
+base as (
+SELECT s.submission_date, h.hacker_id, h.name, 
+rank() OVER(PARTITION BY s.submission_date ORDER BY count(h.hacker_id)) as rn 
+FROM hackers h
+JOIN submissions s
+ON h.hacker_id=s.hacker_id
+GROUP BY s.submission_date, h.hacker_id, h.name 
+),
+
+most_subs as (
+SELECT submission_date, hacker_id, name
+FROM base
+WHERE rn=1
+)
+
+SELECT m.submission_date, m.hacker_id, m.name 
+FROM most_subs m
+JOIN @daily_hackers d
+ON d.submission_date=m.submission_date
+;
+
+
+
+------------------
+
+DECLARE @daily_hackers TABLE(
+    hacker_id INT,
+    submission_date DATE
+    );
+
+INSERT INTO @daily_hackers 
+SELECT hacker_id, submission_date
+FROM submissions
+WHERE submission_date LIKE '2016-03-01';
+
+DECLARE @subdate DATE;
+DECLARE @daybefore DATE;
+SET @subdate='2016-03-01';
+SET @daybefore='2016-03-01';
+
 
 WHILE @subdate<'2016-03-01'
 BEGIN
