@@ -12,6 +12,7 @@ Work in process.
 -----------------
 */
 
+# Most current version:
 DECLARE @daily_hackers TABLE(
     hacker_id INT,
     submission_date DATE
@@ -70,7 +71,7 @@ ON d.submission_date=m.submission_date
 
 
 ------------------
-
+#Old Draft Only Solving Part 1:
 DECLARE @daily_hackers TABLE(
     hacker_id INT,
     submission_date DATE
@@ -110,19 +111,18 @@ ORDER BY submission_date
 
 ---------------------------------------
 --- person with most submissions each day:
-with max_sub as ( SELECT h.hacker_id, h.name, s.submission_date, count(h.hacker_id) as subs, 
-rank() OVER(PARTITION BY submission_date ORDER BY count(h.hacker_id) DESC, h.hacker_id ASC) as rn 
+with max_sub as ( SELECT h.hacker_id, h.name, s.submission_date, 
+row_number() OVER(PARTITION BY submission_date ORDER BY count(h.hacker_id) DESC, h.hacker_id ASC) as rn 
 FROM hackers h
 INNER JOIN submissions s
 ON h.hacker_id=s.hacker_id
 GROUP BY h.hacker_id, h.name, s.submission_date
                  )
                  
-SELECT submission_date, subs, hacker_id, name, rn
+SELECT submission_date, hacker_id, name
 FROM max_sub
 WHERE rn=1
 ;
-
 
 
 -----------------
