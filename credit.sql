@@ -11,6 +11,14 @@ Some use the format "First-name Last-name" to identify a person, others use the 
 
 Also, some names are titled, for example: "Dr. Hannibal Lecter", "Robert Downey Jr." etc. 
 you will need to pay attention to any such or similar cases.
+
+Sources Used:
+https://stackoverflow.com/questions/54309997/select-concatfirst-name-last-name-as-full-name-from-employees-how-to
 */
+
+SELECT CONCAT(CONCAT(first_name, ' '), last_name) AS "full_name"
+FROM customers;
+
+
 
 
