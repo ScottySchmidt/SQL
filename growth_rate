@@ -22,12 +22,23 @@ mth, yr
 FROM cte 
 GROUP BY yr, mth
 ORDER BY yr, mth
-)
+),
 
-SELECT date,
+cte3 as (SELECT date,
 count,
-lag(count,1) OVER(),
+lag(count,1) OVER() as prev,
 mth,
 yr
 FROM cte2
+),
+
+cte4 as( SELECT date,
+count,
+prev,
+round( (100*(count-prev)/prev), 1) as percent_growth
+FROM cte3
+)
+
+SELECT date, count, percent_growth as percent_growth 
+FROM cte4
 ;
