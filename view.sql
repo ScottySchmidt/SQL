@@ -10,11 +10,26 @@ The VIEW must be called members_approved_for_voucher then you must create a SELE
 
 
 CREATE VIEW members_approved_for_voucher as 
-SELECT s.department_id, sum(p.price) as total
-FROM sales s
+SELECT
+m.id as id, 
+m.name as name,
+m.email as email,
+sum(p.price) as total_spending
+FROM members m
+JOIN sales s
+ON m.id=s.member_id
 JOIN products p
 ON p.id=s.product_id
-JOIN members m 
-ON m.id=s.member_id
-GROUP BY s.department_id
-HAVING sum(p.price)>10000
+
+WHERE m.id IN (
+SELECT s1.department_id
+FROM sales s1
+JOIN products p1
+ON p1.id=s1.product_id
+JOIN members m1 
+ON m1.id=s1.member_id
+GROUP BY s1.department_id
+HAVING sum(p1.price)>1000
+  )
+GROUP BY m.id, m.name, m.email
+ORDER BY m.id
