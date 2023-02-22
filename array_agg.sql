@@ -1,12 +1,13 @@
 /* https://www.codewars.com/kata/5818bde9559ff58bd90004a2/train/sql
+This is the second hardest SQL problem on CodeWars. PostSQL
 
 Given the the schema presented below find two actors who cast together the most and list titles of only those movies they were casting together.
 Order the result set alphabetically by the movie title.
 
-Very challenging problem had to reverse engineer this. This is the second hardest SQL problem on CodeWars. 
-First time using array_agg. 
-Need to reattempt this problem on a later day. 
 
+Self join the film_actor id to find same movie_id with different person.
+If discovered, actor1 and actor 2 are JOINED at end to find their name which is sent to the select statemnent.
+array_agg must be used to find all the film_ids. This is needed to find the title_id in the select statement.
 ------------------
 */
 
