@@ -6,7 +6,7 @@ Order the result set alphabetically by the movie title.
 
 
 Self join the film_actor id to find same movie_id with different person.
-If discovered, actor1 and actor 2 are JOINED at end to find their name which is sent to the select statemnent.
+When discovered, actor1 and actor 2 are JOINED at end to find their name which is sent to the select statemnent.
 array_agg must be used to find all the film_ids. This is needed to find the title_id in the select statement.
 ------------------
 */
