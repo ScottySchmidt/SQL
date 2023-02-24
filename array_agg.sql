@@ -11,6 +11,35 @@ array_agg must be used to find all the film_ids. This is needed to find the titl
 ------------------
 */
 
+#Improved solution #2
+with s as (SELECT 
+t1.actor_id as id1,
+t2.actor_id as id2,
+count(t1.film_id) as casts_count,
+array_agg(t1.film_id) as films_array
+FROM film_actor t1
+JOIN film_actor t2
+ON t1.film_id=t2.film_id
+AND t1.actor_id>t2.actor_id
+JOIN film f ON f.film_id=t1.film_id
+GROUP BY id1, id2
+ORDER BY count(t1.film_id) DESC
+LIMIT 1
+)
+
+SELECT 
+concat(a1.first_name, ' ', a1.last_name) as second_actor,
+concat(a2.first_name, ' ', a2.last_name) as first_actor,
+f.title
+FROM s
+JOIN actor a1 on a1.actor_id=s.id1
+JOIN actor a2 on a2.actor_id=s.id2
+JOIN film f on f.film_id=any(s.films_array)
+
+
+--------------
+# My first attempt I had to reverse engineer the problem since first time using agg_array
+
 SELECT
 concat(a1.first_name, ' ', a1.last_name) as second_actor,
 concat(a2.first_name, ' ', a2.last_name) as first_actor,
