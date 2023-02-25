@@ -1,5 +1,5 @@
 /* 
-Counting overlapping events:
+Counting overlapping events from CodeWars.com:
 Create a SQL query which returns the maximum number of simultaneous uses of a service. 
 Each usage ("visit") is logged with its entry and exit timestamps in a "visits" table structured as follows:
 A visit starts at entry time and ends at exit time. 
@@ -29,3 +29,8 @@ from visits a
 inner join visits b
 on a.exit_time > b.entry_time and a.entry_time < b.exit_time
 GROUP BY a.entry_time
+
+---The above is not the final solutiojn as we still have to findn the maximum count of overlapping visits.
+--The instructions never clarify what exactly we are counting. However, the above solution gets the point of overlapping events.
+--This is a very practical and useful problem.
+
