@@ -20,5 +20,12 @@ JOIN visits v2
 ON v1.id=v2.id
 
 ---The above is a good start but this problem is more challenging as we also need the EXACT time of overlap. 
---This can be found by taking the min value of the end time and the max value of start thime.
----This is where the overlap is in which we can then count the days of overlap:
+--This can be found by taking the min value of the end time and the max value of start time.
+---However, after research this method does will occasionally fail if the events completely overlap.
+---Therefore, the solution needs to be like this:
+select a.entry_time as when_happened,
+count(a.entry_time) as visits_count
+from visits a
+inner join visits b
+on a.exit_time > b.entry_time and a.entry_time < b.exit_time
+GROUP BY a.entry_time
