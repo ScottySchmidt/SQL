@@ -15,14 +15,29 @@ This solution is solved easily by using a row_number window function which can p
 
 with twitter as(
 SELECT c.account_id, s.date,
-row_number() OVER(PARTITION BY account_id ORDER BY s.date ASC) as rn
+CASE
+  WHEN s.date IS NOT NULL THEN row_number() OVER(PARTITION BY account_id ORDER BY s.date ASC) 
+ ELSE NULL END as rn
+  
 FROM twitter_campaigns c
 JOIN twitter_campaign_spend s
 ON c.campaign_id = s.campaign_id
 GROUP BY c.account_id, s.date
 ORDER BY c.account_id
+),
+
+nulls as (
+SELECT c.account_id, s.date
+FROM twitter_campaigns c
+JOIN twitter_campaign_spend s
+ON c.campaign_id = s.campaign_id
+WHERE s.date IS null
 )
 
-select account_id, date
-FROM twitter
+select account_id, date as start_date
+FROM twitter 
 WHERE rn=1
+UNION
+SELECT account_id, date as start_date
+FROM twitter
+WHERE date IS null
