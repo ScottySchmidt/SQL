@@ -10,7 +10,9 @@ Instruction
 Write a query to find the activation day for every account.
 Return null if an account has not activated any of the campaigns yet.
 
-This solution is solved easily by using a row_number window function which can put a row_num on each account_id by date.
+This problem is a great question that tests using a window function while detecting NULL values:
+1. Use row_number window function which can put a row_num on each account_id by date.
+2. Use a case statement to fnd NULL values not detected within the window function
 */
 
 with twitter as(
