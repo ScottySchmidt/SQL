@@ -3,8 +3,11 @@ https://sqlpad.io/questions/49/top-3-money-making-movie-categories/
 Top 3 money making movie categories
 
 This problem requires joining six large tables together which is a large amount.
-The difficult part becomes knowing when to use LEFT or INNER JOIN.
+Using a simple INNER JOIN on the primary key IDS should match all the tables correctly.
+
 Using a LIMIT 3 at the end creates a memory error more research needed.
+Therefore, a window function row_number is one solution to make the solution faster:
+https://community.snowflake.com/s/article/Out-of-memory-error-caused-by-LIMIT-and-or-OFFSET-clause
 */
 
 SELECT c.name,  sum(p.amount)
