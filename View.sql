@@ -1,5 +1,6 @@
 /* 
 https://www.codewars.com/kata/5811527d9d278b242f000006/train/sql
+One of the hardest SQL Codewars Problems
 
 Create a VIEW. This VIEW is used by a sales store to give out vouches to members who have spent over $1000 in departments
 that have brought in more than $10000 total ordered by the members id.
