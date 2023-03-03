@@ -3,7 +3,9 @@ HARD SQLpad problem
 The most productive actors by category 
 https://sqlpad.io/questions/74/the-most-productive-actors-by-category/
 
-Using max in (fa.film_id) is just a way to use an agg within a groupnby later to not throw an error.
+Key facors to solve this problem:
+1. Create a window function that will rank the movie counts by category_id.
+2. Using max in (fa.film_id) is just a way to use an agg within a groupnby later to not throw an error.
 */
 
 with categories as (SELECT cat.category_id, 
