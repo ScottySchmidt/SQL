@@ -1,6 +1,9 @@
 /* 
 Using LATERAL JOIN To Get Top N per Group
 https://www.codewars.com/kata/5820176255c3d23f360000a9/train/sql
+
+The first time I will using a window function to solve the problem to understand the problem.
+The second time I will use a lateralJoin.
 -------------------------
 */
 
