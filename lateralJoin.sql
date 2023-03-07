@@ -9,7 +9,7 @@ The second time use a left Lateral join.
 */
 
 with cte as ( SELECT c.id as category_id, c.category, p.title, p.views, p.id as post_id, 
-row_number() OVER( PARTITION BY c.id ORDER BY p.views DESC, p.id DESC )as rn
+row_number() OVER( PARTITION BY c.id ORDER BY p.views DESC, p.id )as rn
 FROM categories c
 JOIN posts p
 ON c.id=p.category_id
@@ -17,5 +17,5 @@ ON c.id=p.category_id
  
  SELECT category_id, category, title, views, post_id
  FROM cte
- WHERE rn<3
+ WHERE rn<3 
  ORDER BY category, views DESC
