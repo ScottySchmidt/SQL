@@ -2,30 +2,20 @@
 Using LATERAL JOIN To Get Top N per Group
 https://www.codewars.com/kata/5820176255c3d23f360000a9/train/sql
 
-The first time I will using a window function to solve the problem to understand the problem.
-The second time I will use a lateralJoin.
+Same problem two times. 
+The firt time solve the problem using a window function.
+The second time use a left Lateral join.
 -------------------------
 */
 
-with cte as(
-SELECT  
-  c.id as category_id, 
-  c.category as category, 
-  min(p.title) as title, 
-  min(p.views) as views,
-  min(p.id) as post_id,
-  row_number() OVER(PARTITION BY c.id, c.category  ORDER BY  min(p.views)) as rn
+with cte as ( SELECT c.id as category_id, c.category, p.title, p.views, p.id as post_id, 
+row_number() OVER( PARTITION BY c.id ORDER BY p.views DESC, p.id DESC )as rn
 FROM categories c
 JOIN posts p
 ON c.id=p.category_id
-  GROUP BY c.id,   c.category 
  )
  
  SELECT category_id, category, title, views, post_id
  FROM cte
  WHERE rn<3
- ORDER BY category, views DESC, post_id
-
-
-
-
+ ORDER BY category, views DESC
