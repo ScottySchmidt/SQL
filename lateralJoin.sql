@@ -18,13 +18,16 @@ Use post id as a tie breaker - a post with a lower id gets a higher rank.
 Same problem two times. 
 The firt time solve the problem using a window function.
 The second time use a left Lateral join.
+
+1. Use a window function to group categories by views desc, then id.
+2. Must use a LEFT JOIN on posts. Using a regular join will pass all test cases but one. 
 -------------------------
 */
 
 with cte as ( SELECT c.id as category_id, c.category, p.title, p.views, p.id as post_id, 
 row_number() OVER( PARTITION BY c.id ORDER BY p.views DESC, p.id )as rn
 FROM categories c
-JOIN posts p
+LEFT JOIN posts p
 ON c.id=p.category_id
  )
  
