@@ -12,7 +12,8 @@ post id lowest to largest
 Note:
 
 Some categories may have less than two or no posts at all.
-Two or more posts within the category can be tied by (have the same) the number of views. Use post id as a tie breaker - a post with a lower id gets a higher rank.
+Two or more posts within the category can be tied by (have the same) the number of views. 
+Use post id as a tie breaker - a post with a lower id gets a higher rank.
 
 Same problem two times. 
 The firt time solve the problem using a window function.
