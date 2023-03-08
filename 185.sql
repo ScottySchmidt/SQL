@@ -1,4 +1,4 @@
-*/
+/*
 https://leetcode.com/problems/department-top-three-salaries/description/
 185. Department Top Three Salaries - HARD Leetcode Problem
 
@@ -7,7 +7,7 @@ A high earner in a department is an employee who has a salary in the top three u
 Write an SQL query to find the employees who are high earners in each of the departments.
 
 My original solution below only beats 55% of solutions by memory speed.
-/*
+*/
 
 with salaries as (SELECT 
 d.name as Department,
