@@ -6,7 +6,7 @@ A company's executives are interested in seeing who earns the most money in each
 A high earner in a department is an employee who has a salary in the top three unique salaries for that department.
 Write an SQL query to find the employees who are high earners in each of the departments.
 
-My original solution below only beats 10% of solutions by memory speed.
+My original solution below only beats 55% of solutions by memory speed.
 /*
 
 with salaries as (SELECT 
@@ -19,13 +19,3 @@ JOIN Department d
 ON e.departmentId=d.id
 )
 
-SELECT Department, Employee, Salary
-FROM salaries
-WHERE rn<4
-
----Faster Solution that beats 
-select d.name department, employee, salary
-from (select name employee, salary, departmentId, dense_rank() over (partition by departmentId order by salary desc) rnk
-from employee) a
-join department d on a.departmentId = d.id
-where rnk <= 3
