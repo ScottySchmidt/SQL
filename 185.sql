@@ -6,9 +6,8 @@ A company's executives are interested in seeing who earns the most money in each
 A high earner in a department is an employee who has a salary in the top three unique salaries for that department.
 Write an SQL query to find the employees who are high earners in each of the departments.
 
-The slow runtime way to solve this problem is to use a window function.
-The below method is only 10% faster than other solutions.
-In addition, I will post a second more efficient way to solve this problem.
+My original solution below only beats 10% of solutions by memory speed.
+After research I will post a second faster solution.
 /*
 
 with salaries as (SELECT 
