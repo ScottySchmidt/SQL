@@ -1,7 +1,9 @@
-# Hard SQL Problem: https://leetcode.com/problems/human-traffic-of-stadium/
-# Find Three Days in a row where stadium has more than 100 people
+/*
+Hard SQL Problem: https://leetcode.com/problems/human-traffic-of-stadium/
+Find Three Days in a row where stadium has more than 100 people
+Filter by more than 100 people
+*/
 
-# Filter by more than 100 people
 #SELECT t1.id, t1.visit_date, t1.people 
 select DISTINCT t1.*
 FROM stadium t1, stadium t2, stadium t3
