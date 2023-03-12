@@ -1,8 +1,8 @@
-# https://datalemur.com/questions/top-fans-rank
-# Spotify SQL Interview Question
-
-# Original solution need to make code more clean
-# DENSE RANK does not require a PARTITION 
+/*
+Spotify HARD SQL https://datalemur.com/questions/top-fans-rank
+Original solution need to make code more clean
+DENSE RANK does not require a PARTITION 
+*/
 
 with t1 AS (
 SELECT 
