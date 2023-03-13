@@ -15,4 +15,15 @@ sum(earnings) OVER(PARTITION BY user_id ORDER BY transaction_date ROWS BETWEEN 2
 FROM earnings
 ;
 
-#However, the above method should only sum if the days are 3 days previously. 
+#However, the above method should only sum if the days are 3 days previously:
+with earnings as (SELECT user_id, sum(amount) as earnings, cast(transaction_date as date)
+FROM user_transactions
+GROUP BY user_id, cast(transaction_date as date)
+)
+
+SELECT user_id, transaction_date, 
+sum(earnings) OVER(PARTITION BY user_id ORDER BY transaction_date RANGE BETWEEN INTERVAL '2' DAY PRECEDING AND CURRENT ROW) as rolling_earnings_3d
+FROM earnings
+;
+
+#Source: https://learnsql.com/blog/range-clause/
