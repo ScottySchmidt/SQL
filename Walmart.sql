@@ -4,12 +4,22 @@ Assume you are given the following tables on Walmart transactions and products.
 Find the number of unique product combinations that are bought together (purchased in the same transaction).
 For example, if I find two transactions where apples and bananas are bought, and another transaction where bananas and soy milk are bought,
 my output would be 2 to represent the 2 unique combinations. 
--------------------------------------------------------------
+--------------------------------------------------------
 */
 
+---Final Solution:
+WITH walmart as (
+SELECT transaction_id, count(product_id),
+array_agg(product_id)
+FROM transactions 
+GROUP BY transaction_id
+HAVING count(product_id)>1
+)
 
+SELECT count(*) as unique_count
+FROM walmart
 
-# Original (incorrect) solution that does not count for unique combos:
+---Original solution that does not count for unique combos:
 with purchase as (
 SELECT t.transaction_id, t.product_id
 FROM transactions t  
