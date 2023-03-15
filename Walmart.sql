@@ -7,6 +7,9 @@ my output would be 2 to represent the 2 unique combinations.
 -------------------------------------------------------------
 */
 
+
+
+# Original (incorrect) solution that does not count for unique combos:
 with purchase as (
 SELECT t.transaction_id, t.product_id
 FROM transactions t  
