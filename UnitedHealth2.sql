@@ -7,7 +7,9 @@ A long-call is categorised as any call that lasts more than 5 minutes (300 secon
 What's the month-over-month growth of long-calls?
 Output the year, month (both in numerical and chronological order) and growth percentage rounded to 1 decimal place.
 
-Must do an order by in the LAG statement or the months will do incorrect calculations.
+A month later I reattempted the problem. 
+The hardest part both times is rememebring to do the 100.0* at the beginning of the growth formula.
+Otherwise, the growth percentage will not round correctly. 
 */
 
 with health as (
