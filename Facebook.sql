@@ -32,9 +32,17 @@ For better understanding of the advertiser's status, we're sharing with you a ta
 8	RESURRECT	CHURN	No pay on day T
 Row 2, 4, 6, 8: As long as the user has not paid on day T, the end status is updated to CHURN regardless of the previous status.
 Row 1, 3, 5, 7: When the user paid on day T, the end status is updated to either EXISTING or RESURRECT, depending on their previous state. RESURRECT is only possible when the previous state is CHURN. When the previous state is anything else, the status is updated to EXISTING.
+---------------------------------------
+
+HOW TO SOLVE:
+This problem requires dealing with new potential data that will not match with a normal join.
+The typical FULL OUTER JOIN method will work if used with a COALSECE() function.
+This function will still find the user_id if one table happens to be NULL. 
 */
 
---------------------------------
+
+
+#Another method is to use UNION which was an original way that the hints recommended:
 WITH payments AS (
 SELECT ad.user_id, ad.status, pay.paid
 FROM advertiser ad
