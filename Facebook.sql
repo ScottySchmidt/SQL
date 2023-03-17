@@ -39,7 +39,17 @@ This problem requires dealing with new potential data that will not match with a
 The typical FULL OUTER JOIN method will work if used with a COALSECE() function.
 This function will still find the user_id if one table happens to be NULL. 
 */
-
+SELECT COALESCE(a.user_id, d.user_id) as user_id, 
+CASE 
+WHEN status='CHURN' AND d.paid>0 THEN 'RESURRECT' 
+WHEN paid IS NULL THEN 'CHURN'
+WHEN a.user_id IS NULL THEN 'NEW'
+ELSE 'EXISTING'
+END as new_stats
+FROM advertiser a 
+FULL OUTER JOIN daily_pay d   
+USING(user_id)
+ORDER BY user_id
 
 
 #Another method is to use UNION which was an original way that the hints recommended:
