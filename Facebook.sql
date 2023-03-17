@@ -6,7 +6,6 @@ Advertiser is a two-column table containing the user id and their payment status
 Only advertisers who paid will show up in this table.
 Output the user id and current payment status sorted by the user id.
 
-
 New: newly registered users who made their first payment.
 Existing: users who paid previously and recently made a current payment.
 Churn: users who paid previously, but have yet to make any recent payment.
