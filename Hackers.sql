@@ -10,6 +10,10 @@ The query should print this information for each day of the contest, sorted by t
 -----------------
 */
 
+
+---THIS IS ONE OF THE HARDEST PROBLEMS ONLINE. 
+---I had to reverse engineer this problem with hints in Feb 2023.
+---Currently working on the solution without hints.
 DECLARE @daily_hackers TABLE(
     hacker_id INT,
     submission_date DATE
