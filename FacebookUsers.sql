@@ -13,6 +13,24 @@ This problem was hard. In fact, my current solution below takes 50 codes of line
 I would likely need a better solution althought it gets the correct solution
 */
 
+---More concise solution I did months later:
+with facebook as(SELECT user_id, event_id,
+EXTRACT(MONTH FROM event_date) as mth
+FROM user_actions
+WHERE event_type in ('sign-in', 'like', 'comment')
+AND EXTRACT(YEAR FROM event_date)='2022'
+AND EXTRACT(MONTH FROM event_date) IN ('6', '7') )
+
+SELECT mth, 
+count(DISTINCT user_id) as monthly_active_users
+FROM facebook
+WHERE mth='7'
+AND user_id IN 
+(SELECT user_id FROM facebook WHERE mth='6')
+GROUP BY mth
+;
+
+
 ---First Working Solution:
 with facebook as (
 SELECT user_id,
