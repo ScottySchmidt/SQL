@@ -19,9 +19,9 @@ year	product_id	curr_year_spend	prev_year_spend	yoy_rate
 2021	123424	1246.44	1000.20	24.62
 2022	123424	2145.32	1246.44	72.12
 The third row in the example output shows that the spend for product 123424 grew 24.62% from 1000.20 in 2020 to 1246.44 in 2021.
+-----------------------------------------------------------------------------------------------------------------------
 */
 
----Second solution solved with no hints:
 with wayfair as(SELECT transaction_id, product_id, spend,
 EXTRACT(YEAR FROM transaction_date) as year
 FROM user_transactions
@@ -43,7 +43,7 @@ round((100.00*(curr_year_spend-prev_year_spend)/prev_year_spend), 2) as yoy_rate
 FROM way_prev
 
 
----First solution:
+---First original solution using a hint:
 with yearly_spend AS (
 SELECT
 EXTRACT(YEAR from transaction_date) as year,
