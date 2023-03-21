@@ -1,19 +1,14 @@
 /*
-Repeated Payments [Stripe SQL Interview Question]
-https://datalemur.com/questions/repeated-payments
+Repeated Payments [Stripe SQL HARD Interview Question] https://datalemur.com/questions/repeated-payments
 
 Sometimes, payment transactions are repeated by accident; 
 it could be due to user error, API failure or a retry error that causes a credit card to be charged twice.
 Using the transactions table, identify any payments made at the same merchant with the same credit card for the same amount within 10 minutes of each other. 
 The first transaction of such payments should not be counted as a repeated payment. 
 This means, if there are two transactions performed by a merchant with the same credit card and for the same amount within 10 minutes, there will only be 1 repeated payment.
-
-This problem is considered HARD. 
-However, if one understands self-joins the problem becomes easier.
-I would imagine there could be a way that solves the problem faster.
 */
 
-
+#My initial solution could occasionally fail if the transactions are on a different day, month, or year. 
 WITH stripe as (
 SELECT merchant_id, credit_card_id, amount, 
 EXTRACT(year FROM transaction_timestamp) as yr,
