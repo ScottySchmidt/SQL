@@ -9,7 +9,9 @@ The first transaction of such payments should not be counted as a repeated payme
 This means, if there are two transactions performed by a merchant with the same credit card and for the same amount within 10 minutes, there will only be 1 repeated payment.
 */
 
-#My initial solution could occasionally fail if the transactions are on a different day, month, or year. 
+
+# My initial solution could occasionally fail if the transactions are on a different day, month, or year. 
+# A better method is to use EPOCH within a lag window function.
 WITH stripe as (
 SELECT merchant_id, credit_card_id, amount, 
 EXTRACT(year FROM transaction_timestamp) as yr,
