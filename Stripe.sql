@@ -10,8 +10,21 @@ This means, if there are two transactions performed by a merchant with the same 
 */
 
 
+# Final solution using lag function with EPOCH:
+with stripe as(SELECT transaction_id, merchant_id, credit_card_id,
+EXTRACT( EPOCH FROM transaction_timestamp-LAG(transaction_timestamp) 
+OVER(PARTITION BY merchant_id, credit_card_id, amount ORDER BY transaction_timestamp))/60
+as min_diff
+FROM transactions
+)
+
+SELECT count(transaction_id) as payment_count
+FROM stripe
+WHERE abs(min_diff)<=10
+
+
 # My initial solution could occasionally fail if the transactions are on a different day, month, or year. 
-# A better method is to use EPOCH within a lag window function.
+# A better method is to use EPOCH within a lag window function. This is also way faster that lessens amount of calculations vasly.
 WITH stripe as (
 SELECT merchant_id, credit_card_id, amount, 
 EXTRACT(year FROM transaction_timestamp) as yr,
