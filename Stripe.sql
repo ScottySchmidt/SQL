@@ -1,5 +1,6 @@
 /*
-Repeated Payments [Stripe SQL HARD Interview Question] https://datalemur.com/questions/repeated-payments
+Repeated Payments [Stripe SQL HARD Interview Question]
+https://datalemur.com/questions/repeated-payments
 
 Sometimes, payment transactions are repeated by accident; 
 it could be due to user error, API failure or a retry error that causes a credit card to be charged twice.
