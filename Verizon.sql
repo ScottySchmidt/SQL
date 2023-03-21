@@ -1,9 +1,9 @@
-*/ 
+/* 
 International Call Percentage [Verizon SQL Interview Question] https://datalemur.com/questions/international-call-percentage
 
 Notes: If one uses *100 the nunber rounds to a whole decimal. Therefore, one must use 100.0. 
 -------------------------------------
-/*
+*/
 
 
 WITH phone AS (
