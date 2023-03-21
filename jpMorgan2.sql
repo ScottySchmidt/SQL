@@ -22,3 +22,30 @@ FROM cards
 WHERE rn=1
 ORDER BY issued_amount DESC
 ;
+
+
+
+
+/*
+ehttps://datalemur.com/questions/cards-issued-difference
+A second JP Morgan question, though considered 'easy'
+*/
+
+with smallTable AS (
+SELECT min(issued_amount) as smallNum, card_name
+FROM monthly_cards_issued
+GROUP BY card_name
+),
+
+bigTable AS (
+SELECT max(issued_amount) as bigNum, card_name
+FROM monthly_cards_issued
+GROUP BY card_name
+)
+
+SELECT  card_name, (b.bigNum-s.smallNum) as difference
+FROM smallTable s
+JOIN bigTable b
+USING (card_name)
+ORDER BY difference DESC
+;
