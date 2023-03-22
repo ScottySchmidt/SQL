@@ -1,6 +1,5 @@
 /*
-https://www.hackerrank.com/challenges/15-days-of-learning-sql/problem?isFullScreen=true
-ADVANCED - Hardest Hackerrank SQL problem
+Hardest Hackerrank SQL problem: https://www.hackerrank.com/challenges/15-days-of-learning-sql/problem?isFullScreen=true
 
 The start date of the contest was March 01, 2016 and the end date was March 15, 2016.
 Write a query to print total number of unique hackers who made at least  submission each day (starting on the first day of the contest). 
