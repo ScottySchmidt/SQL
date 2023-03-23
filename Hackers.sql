@@ -9,17 +9,15 @@ The query should print this information for each day of the contest, sorted by t
 -----------------
 */
 
-
- 
 --- MY SQL SEVER-I had to reverse engineer this problem with hints in Feb 2023:
 DECLARE @daily_hackers TABLE(
     hacker_id INT,
     submission_date DATE
     );
 
-DECLARE @subdate DATE;
+DECLARE @subdate DATE;  
 DECLARE @daybefore DATE;
-    
+
 INSERT INTO @daily_hackers 
 SELECT hacker_id, submission_date
 FROM submissions
@@ -68,6 +66,11 @@ JOIN active_hackers a
 ON a.submission_date=m.submission_date
 ;
 
+
+---Amother method below:
+---DECLARE @curr_date date = '2016-03-01';
+---DECLARE @day_before date = '2016-03-01';
+    
 
 
 ------------------
