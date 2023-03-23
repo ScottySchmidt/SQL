@@ -11,7 +11,7 @@ The query should print this information for each day of the contest, sorted by t
 
 
  
-# MY SQL SEVER-I had to reverse engineer this problem with hints in Feb 2023:
+--- MY SQL SEVER-I had to reverse engineer this problem with hints in Feb 2023:
 DECLARE @daily_hackers TABLE(
     hacker_id INT,
     submission_date DATE
