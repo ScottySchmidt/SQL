@@ -48,7 +48,8 @@ ON o.age_bucket = s.age_bucket
 JOIN total t
 ON s.age_bucket = t.age_bucket
 
---First CASE solution with some hints:
+-- Using a CASE statement is more efficient solution
+-- First CASE solution with some hints:
 WITH snap AS (
 SELECT 
 age.age_bucket,
