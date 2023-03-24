@@ -11,6 +11,44 @@ To avoid integer division in percentages, multiply by 100.0 and not 100.
 ------------------------------------
 */
 
+---Second Solution without any hints:
+with snap as ( SELECT a.activity_type, a.user_id, a.time_spent, a.activity_date, ages.age_bucket
+FROM activities a
+INNER JOIN age_breakdown ages 
+ON a.user_id = ages.user_id
+),
+
+open as (
+SELECT age_bucket, sum(time_spent) as open_perc
+FROM snap
+WHERE activity_type='open'
+GROUP BY age_bucket
+),
+
+send as (
+SELECT age_bucket, sum(time_spent) as send_perc
+FROM snap
+WHERE activity_type='send'
+GROUP BY age_bucket
+),
+
+total as (
+SELECT age_bucket, sum(time_spent) as total
+FROM snap
+WHERE activity_type='send' OR activity_type='open'
+GROUP BY age_bucket
+)
+
+SELECT o.age_bucket, 
+round((100.00*s.send_perc/t.total), 2)  as send_perc,
+round((100.00*o.open_perc/t.total), 2)  as open_perc
+FROM open o
+JOIN send s  
+ON o.age_bucket = s.age_bucket
+JOIN total t
+ON s.age_bucket = t.age_bucket
+
+--First CASE solution with some hints:
 WITH snap AS (
 SELECT 
 age.age_bucket,
