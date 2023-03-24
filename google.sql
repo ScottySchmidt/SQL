@@ -1,9 +1,6 @@
-#These two problems were considered 'mediun' level but were both easy. 
 /*
-https://sqlpad.io/questions/83/top-search_query-in-us-and-uk-on-new-years-day/
+Medium Search Engine SQL   https://sqlpad.io/questions/83/top-search_query-in-us-and-uk-on-new-years-day/
 Top search_query in US and UK on new year's day.
-Medium Search Engine SQL
-This problem was rather simple.
 */
 
 SELECT country, query
@@ -15,9 +12,8 @@ ORDER BY count(DISTINCT user_id) DESC
 LIMIT 2
 
 
-
 /*
-CodeWars Daily
+CodeWars
 find the entries whose name equals "trained"
 group them by the day the activity happened (the date part of the created_at timestamp) and their description's
 the 2 aforementioned fields should be returned together with the number of grouped entries in a column called count
