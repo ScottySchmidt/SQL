@@ -9,6 +9,20 @@ Customer 1 bought from Analytics, Containers, and Compute categories of Azure, a
 Customer 2 isn't a Supercloud customer, since they don't buy any container services from Azure.
 */ 
 
+--Second solution:
+with msft as (SELECT c.customer_id, c.product_id, p.product_category
+FROM customer_contracts c
+INNER JOIN products p 
+ON c.product_id = p.product_id
+)
+
+SELECT customer_id
+FROM msft
+GROUP BY customer_id
+HAVING count(DISTINCT product_category)=3
+;
+
+
 ---Use t1 as a temp table to get the unique count of products using customer_id
 with t1 as(
 SELECT c.customer_id,
