@@ -14,6 +14,27 @@ My Notes:
   a. Dense Rank does not require a PARTITION BY
 */
 
+--Second solution more easy for beginners:
+with spotify as (SELECT a.artist_name
+FROM songs s
+INNER JOIN artists a
+USING (artist_id)
+INNER JOIN global_song_rank g
+ON g.song_id = s.song_id
+WHERE g.rank<11
+),
+
+spotify2 as (SELECT artist_name, 
+dense_rank() OVER(ORDER BY count(artist_name) DESC) as artist_rank
+FROM spotify
+GROUP BY artist_name
+)
+
+SELECT artist_name, artist_rank
+FROM spotify2
+WHERE artist_rank < 6
+;
+
 
 --Original solution need to make code more clean
 with t1 AS (
