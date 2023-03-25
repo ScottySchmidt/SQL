@@ -10,7 +10,7 @@ If two artists' songs have the same number of appearances, the artists should ha
 The rank number should be continuous (1, 2, 2, 3, 4, 5) and not skipped (1, 2, 2, 4, 5).
 
 My Notes:  
-1. DENSE RANK does not require a PARTITION 
+1. DENSE RANK will sort order by a tie (unless row_number or rank), and DENSE RANK does not require a PARTITION. 
 */
 
 
