@@ -1,11 +1,14 @@
----Signup Activation Rate [TikTok SQL Interview Question]
+/*
+Signup Activation Rate [TikTok SQL Interview Question]
 ---https://datalemur.com/questions/signup-confirmation-rate
 
 --New TikTok users sign up with their emails. 
 --They confirmed their signup by replying to the text confirmation to activate their accounts. 
 --Users may receive multiple text messages for account confirmation until they have confirmed their new account.
 --Write a query to find the activation rate of the users. Round the percentage to 2 decimal places.
-----------------------------------------------------------------------
+----------------------------
+*/
+
 WITH not_confirm as (
 SELECT e.user_id, t.signup_action
 FROM emails e
