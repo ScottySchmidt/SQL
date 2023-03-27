@@ -6,7 +6,27 @@ If more than one student created the same number of challenges, then sort the re
 If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
 */ 
 
-# Table1: hacker_id, ch_count
+---
+with hack_ch as (SELECT h.hacker_id, h.name, 
+count(DISTINCT ch.challenge_id) as challenges_created,
+row_number() OVER(PARTITION BY count(DISTINCT ch.challenge_id) DESC ORDER BY h.hacker_id) as rn
+FROM hackers h
+INNER JOIN challenges ch
+ON ch.hacker_id = h.hacker_id
+GROUP BY h.hacker_id, h.name
+ORDER BY count(ch.challenge_id) DESC, h.hacker_id
+)
+
+with maxed as (SELECT hacker_id, name, challenges_created
+FROM hack_ch
+WHERE challenges_created = (SELECT max(challenges_created) FROM hack_ch)
+OR rn = 1
+)
+
+SELECT hacker_id, name, challenges_created FROM maxed
+
+
+---First solution, Table1: hacker_id, ch_count
 with t1 as (
 SELECT h.hacker_id, 
 count(DISTINCT ch.challenge_id) as ch_count
@@ -16,15 +36,13 @@ ON h.hacker_id=ch.hacker_id
 GROUP BY h.hacker_id
 ),
 
-# Table2: attempts, ch_count
-# Attempts is needed to not double count same challenge_id used in final WHERE statement
+--- Attempts is needed to not double count same challenge_id used in final WHERE statement
 t2 AS (
 SELECT count(hacker_id) as attempts, ch_count   
 FROM t1
 GROUP BY ch_count
 )
 
-# Final Results:
 SELECT a.hacker_id, h.name, a.ch_count 
 FROM t1 a
 LEFT JOIN hackers h ON a.hacker_id=h.hacker_id
