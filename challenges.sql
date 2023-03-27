@@ -6,7 +6,7 @@ If more than one student created the same number of challenges, then sort the re
 If more than one student created the same number of challenges and the count is less than the maximum number of challenges created, then exclude those students from the result.
 */ 
 
----
+--- Second solution has runtime error:
 with hack_ch as (SELECT h.hacker_id, h.name, 
 count(DISTINCT ch.challenge_id) as challenges_created,
 row_number() OVER(PARTITION BY count(DISTINCT ch.challenge_id) DESC ORDER BY h.hacker_id) as rn
