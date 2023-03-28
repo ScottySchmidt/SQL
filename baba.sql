@@ -8,13 +8,13 @@ In case of multiple item counts, display the item_counts in ascending order.
 */
 
 
--- Simple solution months later than the second solution below:
+-- Solution 1 the simple way:
 SELECT item_count
 FROM items_per_order
 WHERE order_occurrences = (SELECT max(order_occurrences) FROM items_per_order)
 
 
---- This problem gets the correct answer.However, using limit1 is not prefered as mode could require an average of two top.
+--- Solution2: Complex solution gets the correct answer.However, using limit1 is not prefered as mode could require an average of two top.
 --- Source: https://stackoverflow.com/questions/12235595/find-most-frequent-value-in-sql-column
 with baba as (SELECT order_occurrences,
 count(order_occurrences) as value_counts
