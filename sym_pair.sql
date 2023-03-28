@@ -6,9 +6,12 @@ Specifically, the line: HAVING COUNT(*)>1 OR a.X!=a.Y
 This above code will find a pair that is a duplicate. 
 But then distinct will only count this pair once.
 The or statement is needed because typically a sym pair are not the same x is less than y.
+-----------------
+
+This problem requires a large amount of thinking and trying to resolve it is challenging
 */ 
 
----------------
+
 SELECT DISTINCT a.*
 FROM functions a
 INNER JOIN Functions b ON (a.X=b.Y AND a.Y=b.X)
