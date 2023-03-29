@@ -12,7 +12,7 @@ user_id	spend	transaction_date
 111	89.60	02/05/2022 12:00:00
 --------------------------------------------------
 */ 
----Slightly better solution:
+---Slightly better (more readable) solution:
 with uber as (
 SELECT user_id, spend, transaction_date,
 row_number() OVER(PARTITION BY user_id
