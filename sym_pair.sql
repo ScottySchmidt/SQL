@@ -7,11 +7,26 @@ This above code will find a pair that is a duplicate.
 But then distinct will only count this pair once.
 The or statement is needed because typically a sym pair are not the same x is less than y.
 -----------------
-
-This problem requires a large amount of thinking and trying to resolve it is challenging
 */ 
 
+-- Second solution with commentsL
+with pairs as (SELECT f1.X, f1.Y, 
+count(*) as counts --Need to find pairs on second table
+FROM Functions f1
+INNER JOIN Functions f2 --Doing a self join
+ON f1.X = f2.Y -- X1 = Y2 AND
+AND f2.X = f1.Y -- X2 = Y1
+GROUP BY f1.X, f1.Y --Need to get count
+ORDER BY f1.X, f1.Y --Order by X
+)
 
+SELECT X, Y
+FROM pairs
+WHERE X < y -- "rows such that X1 ≤ Y1"
+OR (X = Y and counts>1 ) --If more than one pair
+
+
+--First solution with hints:
 SELECT DISTINCT a.*
 FROM functions a
 INNER JOIN Functions b ON (a.X=b.Y AND a.Y=b.X)
