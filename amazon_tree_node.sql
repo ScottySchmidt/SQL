@@ -20,3 +20,15 @@ WHEN id NOT IN (SELECT p_id FROM tree WHERE p_id is NOT NULL) THEN 'Leaf'
 ELSE 'Inner' 
 END as type
 FROM tree
+
+
+
+---A better solution from same question on Hackerrank: https://www.hackerrank.com/challenges/binary-search-tree-1/problem?isFullScreen=true
+SELECT N, 
+CASE
+WHEN P is NULL then 'Root'
+WHEN N IN (SELECT P FROM BST) THEN 'Inner'
+ELSE 'Leaf'
+END as label
+FROM BST
+ORDER BY N
