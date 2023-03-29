@@ -1,4 +1,5 @@
-/* https://www.hackerrank.com/challenges/the-company/problem
+/* 
+New Companies Medium Difficulty:  https://www.hackerrank.com/challenges/the-company/problem
 This problem becomes easier once one realizes you only have to join the company and employee tables.
 The second time I attempted the problem I forgot you only need to join employee and company tables.
 */
