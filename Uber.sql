@@ -12,6 +12,21 @@ user_id	spend	transaction_date
 111	89.60	02/05/2022 12:00:00
 --------------------------------------------------
 */ 
+---Slightly better solution:
+with uber as (
+SELECT user_id, spend, transaction_date,
+row_number() OVER(PARTITION BY user_id
+ORDER BY transaction_date) as rn
+FROM transactions
+)
+
+SELECT user_id, spend, transaction_date
+FROM uber
+WHERE rn = 3
+
+
+
+---Original Solution
 WITH uber AS (
 SELECT user_id, spend, transaction_date,
 rank() OVER (
