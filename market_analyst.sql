@@ -45,13 +45,10 @@ GROUP BY u.user_id, u.join_date
 
 
 --Therfore, this is the final solution:
-SELECT u.user_id as 'buyer_id',
-u.join_date, 
-COUNT(o.order_id) as 'orders_in_2019'
-FROM Users u 
----below creates a new table 'o' with 2019 orders only:
-LEFT JOIN (SELECT * from orders WHERE year(order_date)='2019') o
----or can use BETWEEN '2019-01-01' AND '2019-12'31'
-ON u.user_id = o.buyer_id -- must be a buyer_id 
-GROUP BY u.user_id 
+SELECT u.user_id as buyer_id, u.join_date, COUNT(o.order_id) as orders_in_2019
+FROM users u
+LEFT JOIN (SELECT buyer_id, order_id FROM orders
+WHERE EXTRACT(YEAR from order_date) = 2019) o 
+ON u.user_id = O.buyer_id
+GROUP BY u.user_id, u.join_date
 ;
