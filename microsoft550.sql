@@ -19,18 +19,19 @@ In other words, you need to count the number of players that logged in for at le
 --------------------------------------------------------
 */
 
-# Currently passes 4/ 13 test cases:
-with msft as(
-SELECT player_id, games_played, event_date,
-LAG(event_date, 1) OVER(PARTITION BY player_id ORDER BY event_date) as prior_login
+--- Beats 16% runtime, need a better solution:
+with msft as(SELECT player_id, event_date, 
+row_number() OVER(PARTITION BY player_id ORDER BY event_date) as rn
 FROM activity
-ORDER BY event_date
 ),
 
-login_next_day as (SELECT player_id 
+msft_login as (SELECT player_id, event_date, 
+lag(event_date, 1) OVER(PARTITION BY player_id) as day_prior
 FROM msft
-WHERE datediff(event_date, prior_login)=1
+WHERE rn <= 2
 )
+
+SELECT round( (SELECT count(DISTINCT player_id) FROM msft_login WHERE datediff(event_date, day_prior) = 1)/(SELECT count(DISTINCT player_id) FROM msft),2) as fraction
 
 SELECT round(count(DISTINCT player_id) / (SELECT count(DISTINCT player_id) FROM msft), 2) as fraction
 FROM login_next_day 
