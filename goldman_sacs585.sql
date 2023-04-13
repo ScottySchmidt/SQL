@@ -27,7 +27,7 @@ Round tiv_2016 to two decimal places.
 */
 
 
-#Find UNIQUE pid:
+--- Initial solution that needs to be more concise:
 with location as ( 
 SELECT pid, concat(lat, " ", lon) as place FROM insurance
 ), 
@@ -36,20 +36,10 @@ unique_location as (SELECT min(pid) as pid, place
 FROM location
 GROUP BY place
 HAVING count(place) = 1
-),
-
-goldman_sacs_2015 as(
-SELECT pid, sum(tiv_2015) as total_2015
-FROM insurance
-GROUP BY pid
-),
-
-goldman_sacs_2016 as (SELECT min(pid) as pid, sum(tiv_2016) as tiv_2016
-FROM insurance 
-GROUP BY pid 
-HAVING tiv_2016 in (SELECT total_2015 FROM goldman_sacs_2015)
 )
 
-SELECT sum(tiv_2016) as tiv_2016
-FROM goldman_sacs_2016
-WHERE pid in (SELECT pid FROM unique_location)
+SELECT tiv_2016 
+FROM insurance
+WHERE pid IN (SELECT pid FROM insurance 
+GROUP BY tiv_2015 HAVING count(tiv_2015) > 1 )
+AND pid IN (SELECT pid FROM unique_location)
