@@ -26,6 +26,16 @@ Round tiv_2016 to two decimal places.
 ----------------------------------------------------------
 */
 
+---Final solution using window functions (need to reattempt this on a later date):
+SELECT round(sum(tiv_2016),2) as tiv_2016
+FROM (SELECT tiv_2016,
+COUNT(*) OVER(PARTITION BY lat, lon) as count1,
+COUNT(*) OVER(PARTITION BY tiv_2015) as count2
+FROM insurance 
+) t
+WHERE t.count1 = 1
+AND t.count2 > 1
+
 
 --- Initial solution that needs to be more concise:
 with location as ( 
