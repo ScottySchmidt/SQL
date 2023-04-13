@@ -20,7 +20,7 @@ Table: Product
 product_key is the primary key column for this table.
  
 Write an SQL query to report the customer ids from the Customer table that bought all the products in the Product table.
-
+------------------------------------------------------
 */
 
 --Solution beats 49% of runtime:
