@@ -17,6 +17,20 @@ No employee will be the manager of themself.
 -------------------------------------------
 */
 
+--- Final solution beats 94%:
+with managers as(
+SELECT e1.managerId, count(e1.managerId) as manage_count
+FROM employee e1
+GROUP BY e1.managerId
+HAVING count(e1.managerId) > 4
+)
+
+SELECT name
+FROM employee
+WHERE id IN (SELECT managerId FROM managers)
+
+
+
 -- Initial quick solution:
 with managers as(
 SELECT e1.managerId, count(e1.managerId) as manage_count
