@@ -1,4 +1,6 @@
 /*
+Facebook602 602. Friend Requests II: https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/
+
 Table: RequestAccepted
 +----------------+---------+
 | Column Name    | Type    |
@@ -34,6 +36,34 @@ Explanation:
 The person with id 3 is a friend of people 1, 2, and 4, so he has three friends in total, which is the most number than any others.
 -------------------------------------
 */
+
+--
+with a as(SELECT a.accepter_id as id, 
+count(a.accepter_id) as friendCount
+FROM RequestAccepted a
+GROUP BY a.accepter_id
+),
+
+r as( SELECT r.requester_id as id, 
+count(r.requester_id) as friendCount
+FROM RequestAccepted r
+GROUP BY r.requester_id
+)
+
+-- Second solution passes 9/10. One test case count is slighly off:
+SELECT id, sum(numm) as num
+FROM (SELECT id, sum(friendCount) as numm
+FROM a
+GROUP BY id
+UNION
+SELECT id, sum(friendCount) as numm
+FROM r
+GROUP BY id
+) t
+GROUP BY id
+ORDER BY num DESC
+LIMIT 1
+
 
 -- First solution passes 9/10, struggles to join two tables on NULL values:
 with a as(SELECT a.accepter_id as id, count(a.accepter_id) as num1
