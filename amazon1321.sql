@@ -17,11 +17,11 @@ amount is the total paid by a customer.
 -----------------------------------
 */
 
-
 # Initial start that has everything correct but last row:
 SELECT visited_on, 
 round(sum(amount) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING and current row), 2) as amount,
 round(avg(amount) OVER(ORDER BY visited_on ROWS BETWEEN 6 PRECEDING and current row), 2) as average_amount
 FROM customer
 GROUP BY visited_on 
-LIMIT 18446744073 OFFSET 6
+ORDER BY visited_on
+LIMIT 99999999999 OFFSET 6
