@@ -37,20 +37,21 @@ The person with id 3 is a friend of people 1, 2, and 4, so he has three friends 
 -------------------------------------
 */
 
---
-with a as(SELECT a.accepter_id as id, 
-count(a.accepter_id) as friendCount
-FROM RequestAccepted a
-GROUP BY a.accepter_id
-),
+-- Final solution beats 45% runtime:
+SELECT distinct id, count(DISTINCT friend) as num
+FROM 
+(SELECT accepter_id as id, requester_id as friend
+FROM RequestAccepted
+UNION
+SELECT requester_id as id, accepter_id as friend
+FROM RequestAccepted
+) t
+GROUP BY id
+ORDER BY num DESC LIMIT 1
 
-r as( SELECT r.requester_id as id, 
-count(r.requester_id) as friendCount
-FROM RequestAccepted r
-GROUP BY r.requester_id
-)
 
--- Second solution passes 9/10. One test case count is slighly off:
+
+-- Using a union avoids null values issue, but this solution passes 9/10. One test case count is slighly off:
 SELECT id, sum(numm) as num
 FROM (SELECT id, sum(friendCount) as numm
 FROM a
