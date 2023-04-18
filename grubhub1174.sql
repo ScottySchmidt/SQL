@@ -17,11 +17,16 @@ If the customer's preferred delivery date is the same as the order date, then th
 The first order of a customer is the order with the earliest order date that the customer made. 
 It is guaranteed that a customer has precisely one first order.
 Write an SQL query to find the percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places.
+----------------------------------------------
 */
 
-
-# Initial solution that is off a couple percentage:
-SELECT round((SELECT count(delivery_id) 
+# Beats 62% runtime
+with grubhub as (
+SELECT delivery_id, customer_id,
+ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY order_date) as rn,
+DATEDIFF(order_date, customer_pref_delivery_date) as date_diff
 FROM delivery
-WHERE DATEDIFF(order_date, customer_pref_delivery_date) =0)
-/ (SELECT count(DISTINCT delivery_id) FROM delivery), 2) as immediate_percentage
+)
+
+SELECT round((SELECT 100.00*count(delivery_id) FROM grubhub
+WHERE date_diff = 0 and rn = 1) / ( SELECT count(delivery_id) FROM grubhub WHERE rn = 1),2) as immediate_percentage
