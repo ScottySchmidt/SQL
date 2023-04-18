@@ -20,7 +20,7 @@ Write an SQL query to find the percentage of immediate orders in the first order
 ----------------------------------------------
 */
 
-# Beats 62% runtime
+# Beats 62% runtime:
 with grubhub as (
 SELECT delivery_id, customer_id,
 ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY order_date) as rn,
@@ -30,3 +30,6 @@ FROM delivery
 
 SELECT round((SELECT 100.00*count(delivery_id) FROM grubhub
 WHERE date_diff = 0 and rn = 1) / ( SELECT count(delivery_id) FROM grubhub WHERE rn = 1),2) as immediate_percentage
+
+# The only hard part about this problem was realizing it was the first order per customer only. 
+# Therefore, a window function was needed.
