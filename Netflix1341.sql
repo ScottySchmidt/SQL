@@ -80,7 +80,7 @@ SELECT title FROM max_rating
 
 
 
---Currently passes 10 / 17 testcases passed:
+--Initial attempt passes 10 / 17 testcases passed:
 with netflix as(SELECT m.movie_id, m.title, mr.rating, u.user_id, u.name
 FROM MovieRating mr
 JOIN movies m
