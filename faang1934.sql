@@ -27,6 +27,7 @@ The confirmation rate of a user is the number of 'confirmed' messages divided by
 The confirmation rate of a user that did not request any confirmation messages is 0.
 Round the confirmation rate to two decimal places.
 Write an SQL query to find the confirmation rate of each user.
+*/
 
 -- Beats 6% need a faster solution:
 SELECT user_id, round(confirm/attempts, 2) as confirmation_rate FROM
