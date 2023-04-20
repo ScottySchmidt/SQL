@@ -29,7 +29,7 @@ Round the confirmation rate to two decimal places.
 Write an SQL query to find the confirmation rate of each user.
 */
 
--- Beats 6% need a faster solution:
+-- Beats 83% need a faster solution:
 SELECT user_id, round(confirm/attempts, 2) as confirmation_rate FROM
 (SELECT user_id, count(action) as attempts, 
 count(CASE 
@@ -43,3 +43,6 @@ SELECT
 user_id, 0
 FROM signups
 WHERE user_id NOT IN (SELECT distinct user_id FROM confirmations)
+
+-- The trick to solving this problem is to use a UNION statement to find user_id not in the confirmation table.
+-- Those will need to have a 0 as they did not confirm and not registered in the main table.
