@@ -29,7 +29,7 @@ Round the confirmation rate to two decimal places.
 Write an SQL query to find the confirmation rate of each user.
 */
 
--- Beats 83% need a faster solution:
+-- Beats 83% runtime:
 SELECT user_id, round(confirm/attempts, 2) as confirmation_rate FROM
 (SELECT user_id, count(action) as attempts, 
 count(CASE 
