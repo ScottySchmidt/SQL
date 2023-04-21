@@ -18,6 +18,22 @@ Write an SQL query to report the number of bank accounts of each salary category
 The result table must contain all three categories. If there are no accounts in a category, then report 0.
 */
 
+-- To avoid not having a 0 in final answer, use 3 UNION statements is easy to understand but likely slower runetime:
+SELECT "High Salary" as category,
+sum(CASE WHEN income > 50000 THEN 1 else 0
+END) as accounts_count
+FROM accounts
+UNION
+SELECT "Low Salary" as category,
+sum(CASE WHEN income < 20000 then 1 else 0
+END) as accounts_count
+FROM accounts
+UNION
+SELECT "Average Salary" as category,
+sum(CASE WHEN income >= 20000 and income <= 50000 then 1 else 0 END) as accounts_count
+FROM accounts
+
+
 -- Passes 10/11, does not find a salary if null need to fix this bug:
 with cte as (SELECT account_id, 
 CASE
