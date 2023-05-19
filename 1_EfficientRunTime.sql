@@ -1,5 +1,5 @@
 /*
-Some of my solutions used none_sargable query which can slow down runtime. 
+Some of my solutions used non_sargable query which can slow down runtime. 
 I realized this months after working on these SQL problems.
 
 ChatGPT: "When it comes to SQL queries,  a non-sargable query can indeed be slower compared to a sargable query. 
