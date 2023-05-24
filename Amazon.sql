@@ -1,6 +1,7 @@
 /* 
 Highest-Grossing Items [Amazon SQL Interview Question] https://datalemur.com/questions/sql-highest-grossing
-he most challenging partusing row_number OVER to rank the products 
+The most challenging part is using row_number OVER to rank the products 
+But otherwise this is a rather simple problem thus why its only ranked Medium level.
 Source: https://stackoverflow.com/questions/2129693/using-limit-within-group-by-to-get-n-results-per-group
 */
 
