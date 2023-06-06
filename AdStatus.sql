@@ -1,5 +1,5 @@
-/* Advertiser Status [Facebook SQL Interview Question]
-https://datalemur.com/questions/updated-status
+/* 
+Advertiser Status [Facebook SQL Interview Question]   https://datalemur.com/questions/updated-status
 
 Write a query to update the Facebook advertiser's status using the daily_pay table. 
 Advertiser is a two-column table containing the user id and their payment status based on the last payment and daily_pay table has current information about their payment. 
