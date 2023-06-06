@@ -1,5 +1,5 @@
 /*
-1070. Product Sales Analysis III:  https://leetcode.com/problems/product-sales-analysis-iii/description/
+1070. Product Sales Analysis III:  https://leetcode.com/problems/product-sales-analysis-iii/description/     Medium Amazon Interview Question
 
 Table: Sales
 +-------------+-------+
