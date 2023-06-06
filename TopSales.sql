@@ -1,7 +1,6 @@
 /*
 https://sqlpad.io/questions/94/top-3-products-vs-bottom-3-products/
 Top 3 products vs. bottom 3 products 
-Only a Medium Amazon problem but stll worth solving.
 
 Write a query to return the top 3 and bottom 3 products in August 2021 ranked by sales.
 sales = sum(unit_price_usd * qty) .
