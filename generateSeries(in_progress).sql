@@ -18,7 +18,7 @@ Searches will be produced num_users times.
 Then the select statement finds the mediam.
 */
  
- 
+--- I changed this to in progress since I do not think I could solve this from memory at a later day:
 with google as
 (SELECT searches, GENERATE_SERIES(1, num_users)
 FROM search_frequency
