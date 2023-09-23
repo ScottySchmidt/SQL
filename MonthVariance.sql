@@ -11,9 +11,14 @@ FROM sf_transactions),
 
 monthly_amazon_sales as (SELECT sum(value) as monthly_sales, min(mth) as mth, min(year) as year
 FROM amazon_sales
-GROUP BY mth, year)
+GROUP BY mth, year),
 
-SELECT monthly_sales, mth, year,
-LAG(monthly_sales) OVER (ORDER BY year, mth) as prev_month_sales
-FROM monthly_amazon_sales
+amazon_variance AS (
+    SELECT monthly_sales, mth, year, 
+    LAG(monthly_sales) OVER (ORDER BY year, mth) AS prev_month_sales
+    FROM monthly_amazon_sales
+)
+
+SELECT mth, year, monthly_sales, prev_month_sales
+FROM amazon_variance
 ;
