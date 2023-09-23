@@ -19,6 +19,7 @@ amazon_variance AS (
     FROM monthly_amazon_sales
 )
 
-SELECT mth, year, monthly_sales, prev_month_sales
+SELECT mth, year, monthly_sales, prev_month_sales,
+(monthly_sales - prev_month_sales) / (prev_month_sales *100.00)as percentage_change
 FROM amazon_variance
 ;
