@@ -9,10 +9,11 @@ The percentage change column will be populated from the 2nd month forward and ca
 with amazon_sales as (SELECT id, month(created_at) as mth, year(created_at) as year, value, purchase_id 
 FROM sf_transactions),
 
-monthly_amazon_sales as (SELECT id, sum(value) as monthly_sales, min(mth) as mth, min(year) as year
+monthly_amazon_sales as (SELECT sum(value) as monthly_sales, min(mth) as mth, min(year) as year
 FROM amazon_sales
-GROUP BY id, mth, year)
+GROUP BY mth, year)
 
-SELECT id, monthly_sales, mth, year, lag(monthly_sales) OVER(PARTITION BY id ORDER BY id) as prev_month
+SELECT monthly_sales, mth, year,
+LAG(monthly_sales) OVER (ORDER BY year, mth) as prev_month_sales
 FROM monthly_amazon_sales
 ;
