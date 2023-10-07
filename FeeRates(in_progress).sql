@@ -7,16 +7,23 @@ Convert the column 'host_response_rate' from TEXT to NUMERIC using type casts an
 Order the result in ascending order based on the average host response rater after cleaning.
 */
 
-with airbnb as(SELECT 
-  zipcode,
-  host_response_rate
-FROM airbnb_search_details
-WHERE cleaning_fee = 'TRUE' 
-  AND TRY_CAST(REPLACE(host_response_rate, '%', '') AS FLOAT) IS NULL
-  )
-  
+WITH airbnb AS (
   SELECT 
-  zipcode, 
-  AVG(CAST(host_response_rate AS FLOAT)) AS avg_response_rate
+    zipcode,
+    host_response_rate,
+    TRY_CAST(REPLACE(host_response_rate, '%', '') AS FLOAT) AS numeric_response_rate
+  FROM airbnb_search_details
+  WHERE cleaning_fee = 'TRUE' 
+    AND TRY_CAST(REPLACE(host_response_rate, '%', '') AS FLOAT) IS NOT NULL
+),
+
+air2 as(
+SELECT zipcode, 
+  avg(numeric_response_rate) 
+  as avg_response 
 FROM airbnb
-GROUP BY zipcode;
+GROUP BY zipcode)
+
+SELECT zipcode, avg_response
+FROM air2
+ORDER By avg_response ASC
