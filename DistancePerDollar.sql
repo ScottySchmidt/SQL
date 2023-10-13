@@ -8,6 +8,12 @@ Distance-per-dollar is defined as the distance traveled divided by the cost of t
 You should also count both success and failed request_status as the distance and cost values are populated for all ride requests. Also, assume that all dates are unique in the dataset. Order your results by earliest request date first.
 */
 
-SELECT * FROM uber_request_logs;
-
+SELECT 
+    request_date, 
+    CONCAT(YEAR(CONVERT(DATETIME, request_date)), '-', FORMAT(CONVERT(DATETIME, request_date), 'MM')) AS year_month, 
+    distance_to_travel,  
+    monetary_cost,
+    ROUND(distance_to_travel / monetary_cost, 2) AS distance_per_dollar
+FROM 
+    uber_request_logs;
 
