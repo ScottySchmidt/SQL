@@ -8,7 +8,8 @@ Order records in ascending order by user id.
 The 'user1' and 'user2' column are pairs of friends.
 */
 
-SELECT user1, count(user1) as friend_count
-FROM facebook_friends f
+SELECT user1, 
+round(100.00*count(user2)/(SELECT count(user1) FROM facebook_friends),2) as popular_percentage
+FROM facebook_friends
 GROUP BY user1
 ORDER BY user1
