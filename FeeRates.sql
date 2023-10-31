@@ -29,3 +29,14 @@ GROUP BY zipcode
 SELECT zipcode, avg_response
 FROM air2
 ORDER BY avg_response ASC
+
+  
+
+--MY_SQL
+SELECT zipcode, avg(host_response_rate) as avg_rate
+FROM airbnb_search_details
+WHERE cleaning_fee = 1
+AND host_response_rate IS NOT null
+GROUP BY zipcode
+ORDER BY avg(host_response_rate) ASC
+;
