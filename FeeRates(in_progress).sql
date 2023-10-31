@@ -7,6 +7,7 @@ Convert the column 'host_response_rate' from TEXT to NUMERIC using type casts an
 Order the result in ascending order based on the average host response rater after cleaning.
 */
 
+--- SQL Server
 WITH airbnb AS (
   SELECT 
     zipcode,
@@ -22,8 +23,9 @@ SELECT zipcode,
   avg(numeric_response_rate) 
   as avg_response 
 FROM airbnb
-GROUP BY zipcode)
+GROUP BY zipcode
+)
 
 SELECT zipcode, avg_response
 FROM air2
-ORDER By avg_response ASC
+ORDER BY avg_response ASC
