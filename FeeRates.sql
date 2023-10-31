@@ -32,11 +32,13 @@ ORDER BY avg_response ASC
 
   
 
---MY_SQL
-SELECT zipcode, avg(host_response_rate) as avg_rate
+--MY_SQL, one liner:
+SELECT zipcode,  
+CAST(AVG(CAST(REPLACE(host_response_rate, '%', '') AS DECIMAL(10, 2))) AS DECIMAL(10, 2)) AS avg_rate
 FROM airbnb_search_details
 WHERE cleaning_fee = 1
 AND host_response_rate IS NOT null
 GROUP BY zipcode
-ORDER BY avg(host_response_rate) ASC
+ORDER BY avg_rate ASC
+;
 ;
