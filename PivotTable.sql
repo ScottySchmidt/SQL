@@ -7,6 +7,9 @@ Output payment details along with the corresponding employee name.
 Order records by the employee name in ascending order
 */
 
-SELECT id, employeename
+SELECT id, employeename, year,
+max(totalpaybenefits) as high_pay
 FROM sf_public_salaries
-WHERE YEAR in (2011, 2012, 2013, 2014);
+WHERE YEAR in (2011, 2012, 2013, 2014)
+GROUP BY id, employeename, year
+ORDER BY employeename asc
