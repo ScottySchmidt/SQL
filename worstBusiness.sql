@@ -2,7 +2,7 @@
 For every year, find the worst business in the dataset. The worst business has the most violations during the year. You should output the year, business name, and number of violations.
 */ 
 
---SQL Server:
+--SQL Server and MySQL:
 with business as (SELECT business_name, year(inspection_date) as inspect_year, COUNT(business_name) as violations_count
 FROM sf_restaurant_health_violations
 GROUP BY business_name, year(inspection_date)
