@@ -6,6 +6,30 @@ The output should include the year-month date (YYYY-MM) and percentage change, r
 The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.
 */ 
 
+--MySql
+WITH amazon_sales AS (
+    SELECT
+        LEFT(created_at, 7) AS FormattedMonth,
+        sum(value) as month_sales
+    FROM
+        sf_transactions
+    GROUP BY LEFT(created_at, 7)
+), 
+
+amazon_variance as(SELECT
+    FormattedMonth,
+    month_sales,
+    lag(month_sales, 1) OVER (ORDER BY FormattedMonth) as prev_month_sales
+FROM
+    amazon_sales
+    )
+    
+    SELECT FormattedMonth,
+    100.00*(month_sales - prev_month_sales)/prev_month_sales
+    FROM amazon_variance;
+
+
+---Sql Server
 with amazon_sales as (SELECT id, month(created_at) as mth, year(created_at) as year, value, purchase_id 
 FROM sf_transactions),
 
