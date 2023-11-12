@@ -47,3 +47,20 @@ SELECT mth, year, monthly_sales, prev_month_sales,
 (monthly_sales - prev_month_sales) / (prev_month_sales *100.00)as percentage_change
 FROM amazon_variance
 ;
+
+
+--Python
+import pandas as pd
+
+df= sf_transactions[['created_at', 'value']]
+df['year_month'] = df['created_at'].astype(str).str[:7]
+
+# Create a DataFrame to store the monthly sums
+variance_df = df.groupby('year_month')['value'].sum().reset_index()
+
+# Create the 'previous_month' column by shifting 'year_month'
+variance_df['previous_month_revenue'] = variance_df['value'].shift(1)
+
+variance_df['revenue_change'] = (100.00*(variance_df['value']-variance_df['previous_month_revenue'])/variance_df['previous_month_revenue']).round(2)
+
+final_df = variance_df[['year_month', 'revenue_change']]
