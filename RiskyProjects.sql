@@ -33,3 +33,29 @@ SELECT title, budget, prorated_employee_expense
 FROM variance
 WHERE prorated_employee_expense > budget
 ;
+
+--SQL Server (in process)
+WITH p AS (
+    SELECT REPLACE(title, 'Project', '') AS project_id, title, budget,
+           DATEDIFF(DAY, start_date, end_date) / 365.25 AS year_percent
+    FROM linkedin_projects
+),
+
+cost as(SELECT p.project_id, sum(e.salary) as salary_cost
+FROM linkedin_employees e
+INNER JOIN linkedin_emp_projects p
+ON e.id = p.emp_id
+GROUP BY p.project_id
+),
+
+variance as(SELECT p.project_id, p.title, p.budget, p.year_percent, cost.salary_cost, 
+CEILING(p.year_percent*cost.salary_cost) as prorated_employee_expense
+FROM p
+INNER JOIN linkedin_emp_projects ep ON p.project_id = ep.project_id
+INNER JOIN cost ON cost.project_id = p.project_id
+)
+
+SELECT title, budget, prorated_employee_expense
+FROM variance
+WHERE prorated_employee_expense > budget
+;
