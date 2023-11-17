@@ -19,3 +19,16 @@ FROM joined
 GROUP BY date
 ORDER BY DATE ASC;
 
+  --SQL Server
+select date, sum(consumption) as total_consumption
+from 
+(
+  select * from fb_eu_energy
+  union all
+  select * from fb_asia_energy
+  union all
+  select * from fb_na_energy
+) as output
+group by output.date
+order by date
+
