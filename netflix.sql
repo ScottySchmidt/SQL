@@ -1,8 +1,10 @@
 /*
-Find the genre of the person with the most number of oscar winnings: https://platform.stratascratch.com/coding/10171-find-the-genre-of-the-person-with-the-most-number-of-oscar-winnings?code_type=5
+Find the genre of the person with the most number of oscar winnings:
+https://platform.stratascratch.com/coding/10171-find-the-genre-of-the-person-with-the-most-number-of-oscar-winnings?code_type=5
 
-Find the genre of the person with the most number of oscar winnings.
-If there are more than one person with the same number of oscar wins, return the first one in alphabetic order based on their name. Use the names as keys when joining the tables.
+If there are more than one person with the same number of oscar wins, 
+return the first one in alphabetic order based on their name. 
+Use the names as keys when joining the tables.
 */
 
 --SQL Server and mySQL:
