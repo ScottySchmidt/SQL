@@ -1,5 +1,5 @@
 /*
-Y-over-Y Growth Rate [Wayfair SQL Interview Question] https://datalemur.com/questions/yoy-growth-rate  First Hard SQL
+Y-over-Y Growth Rate [Wayfair SQL Interview Question] https://datalemur.com/questions/yoy-growth-rate 
 
 Assume you are given the table below containing information on user transactions for particular products.
 Write a query to obtain the year-on-year growth rate for the total spend of each product for each year.
