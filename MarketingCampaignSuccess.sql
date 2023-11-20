@@ -18,6 +18,21 @@ AND prod_rank =1
 ;
 
 
+--Python Solution:
+import pandas as pd
+
+df = marketing_campaign
+df['date_rank'] = df.groupby('user_id')['created_at'].rank(method='dense')
+df['prod_rank'] = df.groupby(['user_id', 'product_id'])['created_at'].rank()
+
+# Resetting the index
+filter_df = df[(df['date_rank'] > 1) & (df['prod_rank'] == 1)]
+
+# Counting distinct user_ids
+distinct_user_count = filter_df['user_id'].nunique()
+
+print(distinct_user_count)
+
 --SQL Server, this solution is incorrect by 5% because you must find the number of same products too:
 with cte as (SELECT user_id, created_at,
 	LAG(created_at,1) OVER ( PARTITION BY user_id ORDER BY created_at
