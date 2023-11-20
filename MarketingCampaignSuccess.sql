@@ -18,7 +18,7 @@ AND prod_rank =1
 ;
 
 
---Python Solution:
+--Python Solution, must use DenseRank for date_rank to get a date other than original created_at
 import pandas as pd
 
 df = marketing_campaign
