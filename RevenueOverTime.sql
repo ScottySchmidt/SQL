@@ -41,3 +41,21 @@ GROUP BY YearMonth
 
 SELECT YearMonth, AVG(revenue) OVER (ORDER BY YearMonth ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) as ThreeMonthAverageSales
 FROM amazon_month_revenue;
+
+
+--- Python
+import pandas as pd
+df=amazon_purchases
+
+#Get each datetime as a date:
+df['YearMonth'] = df['created_at'].astype(str).str[:7]
+
+#Filter out negative purchase values:
+filter_df = df[df['purchase_amt'] > 0]
+
+#Group sum by purchase amount
+grouped_df = filter_df.groupby('YearMonth')['purchase_amt'].sum().reset_index()
+
+# Calculate the rolling average on the grouped DataFrame
+grouped_df['RollingAverage'] = grouped_df['purchase_amt'].rolling(window=3, min_periods=1).mean()
+grouped_df
