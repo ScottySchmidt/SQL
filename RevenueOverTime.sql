@@ -26,3 +26,18 @@ YearMonth	ThreeMonthAverageSales
 2020-01	26292
 2020-02	23493
 2020-03	25535
+
+--My SQL
+with amazon_revenue as (
+SELECT FORMAT(CAST(created_at AS DATE), 'yyyy-MM') AS YearMonth, purchase_amt 
+FROM amazon_purchases
+WHERE purchase_amt  >0),
+
+amazon_month_revenue as (SELECT YearMonth, 
+sum(purchase_amt) as revenue
+FROM amazon_revenue
+GROUP BY YearMonth
+)
+
+SELECT YearMonth, AVG(revenue) OVER (ORDER BY YearMonth ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) as ThreeMonthAverageSales
+FROM amazon_month_revenue;
