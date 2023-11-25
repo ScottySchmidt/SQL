@@ -10,6 +10,26 @@ https://platform.stratascratch.com/coding/10357-direct-deposit-conversions?code_
 */
 
 --SQL Server
-SELECT id, transaction_date, transaction_amount, employer, user_id
-FROM dd_transactions;
+WITH EmployerTransactions AS (
+    SELECT
+        employer,
+        transaction_amount,
+        transaction_date,
+        LEAD(transaction_amount) OVER (PARTITION BY employer ORDER BY transaction_date) AS next_transaction_amount,
+        LEAD(transaction_date) OVER (PARTITION BY employer ORDER BY transaction_date) AS next_transaction_date
+    FROM
+        dd_transactions
+)
+
+SELECT
+    employer,
+    transaction_amount AS first_transaction_amount,
+    transaction_date AS first_transaction_date,
+    next_transaction_amount AS second_transaction_amount,
+    next_transaction_date AS second_transaction_date
+FROM
+    EmployerTransactions
+WHERE
+    ABS(transaction_amount - next_transaction_amount) <= 25
+    AND DATEDIFF(DAY, transaction_date, next_transaction_date) <= 30;
 
