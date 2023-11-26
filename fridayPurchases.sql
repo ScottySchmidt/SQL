@@ -17,3 +17,18 @@ AND year(date) ='2023'
 SELECT WeekNumber , avg(amount_spent) as avg_spent
 FROM cte
 GROUP BY WeekNumber 
+
+
+--MySQL Solution, cannot use DATEPART above as thats sqlsever only
+with cte as (SELECT user_id, date, amount_spent, day_name
+, WEEK(date) AS WeekNumber 
+FROM user_purchases
+WHERE day_name = 'Friday' 
+AND MONTH(date) IN (1, 2, 3) 
+AND year(date) ='2023'
+)
+
+SELECT WeekNumber , avg(amount_spent) as avg_spent
+FROM cte
+GROUP BY WeekNumber 
+ORDER BY WeekNumber
