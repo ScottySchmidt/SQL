@@ -32,3 +32,16 @@ SELECT WeekNumber , avg(amount_spent) as avg_spent
 FROM cte
 GROUP BY WeekNumber 
 ORDER BY WeekNumber
+
+
+---Python
+import pandas as pd
+
+df= user_purchases
+df = user_purchases[
+    (user_purchases['date'].dt.year == 2023) &
+    (user_purchases['date'].dt.month.between(1, 3)) &
+    (user_purchases['date'].dt.weekday == 4)  # Monday is 0 and Sunday is 6
+]
+df['week_number'] = df['date'].dt.week
+average_amount_per_week = df.groupby('week_number')['amount_spent'].mean().reset_index()
