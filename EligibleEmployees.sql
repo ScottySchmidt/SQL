@@ -9,7 +9,7 @@ The output should include the Employee ID, Salary, and Department of the employe
 https://platform.stratascratch.com/coding/10359-eligible-employees?code_type=3
 */
 
---MySQL Solution:
+--SQL Server Solution:
 with cte as (SELECT employee_id, salary, department,  PERCENTILE_CONT(0.10) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
 FROM employee_salaries
 WHERE tenure > 3)
