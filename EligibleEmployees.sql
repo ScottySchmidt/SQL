@@ -20,5 +20,20 @@ WHERE salary > top_ten_percent
 AND DEPARTMENT IN (SELECT department
 FROM employee_salaries
 GROUP BY department
+HAVING COUNT(DISTINCT employee_id) > 5);
+
+
+--MySQL Solution:
+with cte as (SELECT employee_id, salary, department, 
+ PERCENT_RANK() OVER (PARTITION BY department ORDER BY salary) as top_ten_percent
+FROM employee_salaries
+WHERE tenure > 3)
+
+SELECT employee_id, salary, department
+FROM cte
+WHERE salary > top_ten_percent 
+AND DEPARTMENT IN (SELECT department
+FROM employee_salaries
+GROUP BY department
 HAVING COUNT(DISTINCT employee_id) > 5)
 ;
