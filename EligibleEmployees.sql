@@ -11,7 +11,7 @@ https://platform.stratascratch.com/coding/10359-eligible-employees?code_type=3
 
 --SQL Server Solution:
 with cte as (SELECT employee_id, salary, department, tenure,
-PERCENTILE_CONT(0.10) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
+PERCENTILE_CONT(0.90) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
 FROM employee_salaries)
 
 SELECT employee_id, salary, department
@@ -39,3 +39,18 @@ FROM employee_salaries
 GROUP BY department
 HAVING COUNT(DISTINCT employee_id) > 5)
 ;
+
+--Python Solution:
+import pandas as pd
+import numpy as np
+
+df = employee_salaries
+
+# Calculate top 10 salary percent by department
+df['salary_10_percent'] = df.groupby('department')['salary'].transform(lambda x: np.percentile(x, 90))
+
+# Calculate the count of distinct employee_id within each department and create a new column
+df['dept_count'] = df.groupby('department')['employee_id'].transform('nunique')
+filter_df = df[(df['salary'] > df['salary_10_percent']) & (df['tenure'] > 3) & (df['dept_count']> 4)]
+
+filter_df[['employee_id', 'salary', 'department']]
