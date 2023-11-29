@@ -10,17 +10,19 @@ https://platform.stratascratch.com/coding/10359-eligible-employees?code_type=3
 */
 
 --SQL Server Solution:
-with cte as (SELECT employee_id, salary, department,  PERCENTILE_CONT(0.10) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
-FROM employee_salaries
-WHERE tenure >= 3)
+with cte as (SELECT employee_id, salary, department, tenure,
+PERCENTILE_CONT(0.10) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
+FROM employee_salaries)
 
 SELECT employee_id, salary, department
 FROM cte
 WHERE salary > top_ten_percent 
+AND tenure > 3
 AND DEPARTMENT IN (SELECT department
 FROM employee_salaries
 GROUP BY department
-HAVING COUNT(DISTINCT employee_id) > 5);
+HAVING COUNT(DISTINCT employee_id) > 5)
+;
 
 
 --MySQL Solution:
