@@ -12,7 +12,7 @@ https://platform.stratascratch.com/coding/10359-eligible-employees?code_type=3
 --SQL Server Solution:
 with cte as (SELECT employee_id, salary, department,  PERCENTILE_CONT(0.10) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
 FROM employee_salaries
-WHERE tenure > 3)
+WHERE tenure >= 3)
 
 SELECT employee_id, salary, department
 FROM cte
