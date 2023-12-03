@@ -1,5 +1,5 @@
 /*
-585. Investments in 2016: https://leetcode.com/problems/investments-in-2016/description/
+585. Investments in 2016, Goldman Sacs: https://leetcode.com/problems/investments-in-2016/description/
 
 Table: Insurance
 +-------------+-------+
