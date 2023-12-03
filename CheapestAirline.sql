@@ -21,23 +21,35 @@ origin | destination | total_cost
 DFW | JFK | 200
 */
 
-
----In process, using a self inner join:
+---SQL Server:
+WITH FlightPairs AS (
+    SELECT
+        f1.id AS first_flight_id,
+        f1.origin AS first_origin,
+        f1.destination AS first_destination,
+        f1.cost AS first_cost,
+        f2.id AS second_flight_id,
+        f2.origin AS second_origin,
+        f2.destination AS second_destination,
+        f2.cost AS second_cost,
+        f1.cost + f2.cost AS total_cost,
+        ROW_NUMBER() OVER (PARTITION BY f1.destination, f2.destination ORDER BY f1.cost + f2.cost ASC) AS row_num
+    FROM
+        da_flights f1
+    JOIN
+        da_flights f2 ON f1.destination = f2.origin
+)
 SELECT
-    f1.id AS first_flight_id,
-    f1.origin AS first_origin,
-    f1.destination AS first_destination,
-    f1.cost AS first_cost,
-    f2.id AS second_flight_id,
-    f2.origin AS second_origin,
-    f2.destination AS second_destination,
-    f2.cost AS second_cost,
-    f1.cost + f2.cost AS total_cost
-FROM
-    da_flights f1
-JOIN
-    da_flights f2 ON f1.destination = f2.origin
-WHERE
-    f1.origin <> f2.destination
-ORDER BY
+    first_flight_id,
+    first_origin,
+    first_destination,
+    first_cost,
+    second_flight_id,
+    second_origin,
+    second_destination,
+    second_cost,
     total_cost
+FROM
+    FlightPairs
+WHERE
+    row_num = 1;
