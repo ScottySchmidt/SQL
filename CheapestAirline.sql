@@ -21,7 +21,7 @@ origin | destination | total_cost
 DFW | JFK | 200
 */
 
----SQL Server:
+---SQL Server and mySQL:
 WITH FlightPairs AS (
     SELECT
         f1.id AS first_flight_id,
