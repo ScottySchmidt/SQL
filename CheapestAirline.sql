@@ -21,7 +21,7 @@ origin | destination | total_cost
 DFW | JFK | 200
 */
 
----SQL Server and mySQL:
+---My original solution only accounts for one stop but not 0 or 2. 
 WITH FlightPairs AS (
     SELECT
         f1.id AS first_flight_id,
