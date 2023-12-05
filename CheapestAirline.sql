@@ -21,7 +21,7 @@ origin | destination | total_cost
 DFW | JFK | 200
 */
 
---SQL Server:
+--SQL Server and MySQL Solution:
 with one_stop as (
 SELECT 	a.origin as first_origin,
 a.destination as first_dest, 
