@@ -21,7 +21,56 @@ origin | destination | total_cost
 DFW | JFK | 200
 */
 
----My original solution only accounts for one stop but not 0 or 2. 
+--SQL Server:
+with one_stop as (
+SELECT 	a.origin as first_origin,
+a.destination as first_dest, 
+a.cost as cost1, 
+b.origin as second_origin, 
+b.destination as second_dest, 
+b.cost as cost2,
+a.cost+b.cost as total_cost,
+concat(a.origin, ' -> ', b.destination) as route
+FROM da_flights a, da_flights b
+WHERE a.destination = b.origin
+),
+
+two_stop as (
+SELECT 	a.origin as first_origin,
+a.destination as first_dest, 
+a.cost as cost1, 
+b.origin as second_origin, 
+b.destination as second_dest, 
+b.cost as cost2,
+c.origin as third_origin, 
+c.destination as third_dest,
+c.cost,
+a.cost+b.cost+c.cost as total_cost,
+concat(a.origin, ' -> ', b.destination, ' -> ', c.destination)  as route
+FROM da_flights a, da_flights b, da_flights c
+WHERE a.destination = b.origin
+AND b.origin = c.destination
+),
+
+final_flights as (
+SELECT origin, destination, cost as total_cost, concat(origin, ' -> ' , destination) as route
+FROM da_flights
+UNION ALL
+SELECT first_origin, second_dest, total_cost, route
+FROM one_stop
+UNION ALL
+SELECT first_origin, third_dest, total_cost, route
+FROM two_stop)
+
+SELECT origin, destination, min(total_cost) as cheapest_flight, min(route) as route
+FROM final_flights
+GROUP BY origin, destination
+ORDER BY cheapest_flight
+
+
+
+
+---My original incorrect solution only accounts for one stop but not 0 or 2. 
 WITH FlightPairs AS (
     SELECT
         f1.id AS first_flight_id,
