@@ -67,8 +67,19 @@ FROM final_flights
 GROUP BY origin, destination
 ORDER BY cheapest_flight
 
+/*
+FINAL OUTPUT with the arrows so route can be clearly seen:
+origin	destination	cheapest_flight	route
+DFW	JFK	200	DFW -> JFK
+DFW	LHR	1200	DFW -> LHR
+DFW	MCO	100	DFW -> MCO
+JFK	LHR	1000	JFK -> LHR
+SFO	DFW	200	SFO -> DFW
+SFO	JFK	400	SFO -> JFK
+SFO	LHR	1500	SFO -> LHR
+*/
 
-
+    
 
 ---My original incorrect solution only accounts for one stop but not 0 or 2. 
 WITH FlightPairs AS (
