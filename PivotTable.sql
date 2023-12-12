@@ -7,7 +7,8 @@ Output payment details along with the corresponding employee name.
 Order records by the employee name in ascending order
 */
 
---- MySQL and SqlServer Solution:
+--- MySQL, Oracle and SqlServer Solution. 
+--- Pivot tables are important, this creates a pivot table without using PIVOT
 SELECT employeename, year,
 max(totalpaybenefits) as high_pay
 FROM sf_public_salaries
