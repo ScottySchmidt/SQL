@@ -27,9 +27,9 @@ YearMonth	ThreeMonthAverageSales
 2020-02	23493
 2020-03	25535
 
---My SQL
+--My SQL has a different date_format:
 with amazon_revenue as (
-SELECT FORMAT(CAST(created_at AS DATE), 'yyyy-MM') AS YearMonth, purchase_amt 
+SELECT DATE_FORMAT(created_at, '%Y-%m') AS YearMonth, purchase_amt 
 FROM amazon_purchases
 WHERE purchase_amt  >0),
 
