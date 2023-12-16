@@ -9,9 +9,10 @@ Order records by the employee name in ascending order
 
 --- MySQL, Oracle and SqlServer Solution. 
 --- Pivot tables are important, this creates a pivot table without using PIVOT
+--- This problem is labeled 'hard' but more so medium, but pivot tables are very practical. 
 SELECT employeename, year,
 max(totalpaybenefits) as high_pay
 FROM sf_public_salaries
 WHERE year in (2011, 2012, 2013, 2014)
-GROUP BY id, employeename, year
+GROUP BY id, employeename, year  -- GROUP BY is in case two people have exact same name.
 ORDER BY employeename asc
