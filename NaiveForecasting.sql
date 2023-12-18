@@ -11,9 +11,10 @@ The next step is to populate the forecasted value for each month. This can be ac
 RMSE is defined as sqrt(mean(square(actual - forecast)). Report out the RMSE rounded to the 2nd decimal spot.
 */
 
-with uber as (SELECT request_id, month(request_date) as month, request_status, monetary_cost, 
-  driver_to_client_distance, (monetary_cost/ driver_to_client_distance) distance_per_dollar
+with cte as ( SELECT month(request_date) as month,
+round(avg(distance_to_travel/monetary_cost),2) as distance_per_dollar
 FROM uber_request_logs
+GROUP BY month(request_date)
 )
 
-SELECT * FROM uber;
+SELECT month, distance_per_dollar FROM cte
