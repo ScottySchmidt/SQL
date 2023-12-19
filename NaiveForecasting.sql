@@ -11,7 +11,7 @@ The next step is to populate the forecasted value for each month. This can be ac
 RMSE is defined as sqrt(mean(square(actual - forecast)). Report out the RMSE rounded to the 2nd decimal spot.
 */
 
--- SQL Server and MySQL Solution: 
+-- SQL Server and MySQL: 
 with cte as ( SELECT month(request_date) as month,
 round(avg(distance_to_travel/monetary_cost),2) as distance_per_dollar
 FROM uber_request_logs
@@ -25,3 +25,18 @@ FROM cte)
 
 SELECT month, SQRT(POWER(distance_per_dollar-prior_month_average, 2)) as RMSE --technically avg_RMSE
 FROM cte2
+
+/*
+Above code generates the report by month like below:
+month	RMSE
+1	7.44
+2	1.36
+3	0.53
+4	3.49
+5	4.46
+6	0.2
+7	4.53
+8	10.8
+9	11.7
+10	0.86
+*/
