@@ -10,57 +10,36 @@ https://platform.stratascratch.com/coding/10359-eligible-employees?code_type=3
 */
 
 --SQL Server Solution:
-with cte as (SELECT employee_id, salary, department, tenure,
-PERCENTILE_CONT(0.90) WITHIN GROUP (ORDER BY salary) OVER (PARTITION BY department) as top_ten_percent
-FROM employee_salaries)
-
-SELECT employee_id, salary, department
-FROM cte
-WHERE salary > top_ten_percent 
-AND tenure > 3
-AND DEPARTMENT IN (SELECT department
-FROM employee_salaries
-GROUP BY department
-HAVING COUNT(DISTINCT employee_id) > 5)
-;
-
-
---MySQL Solution:
 with cte as (SELECT employee_id, salary, department, 
- PERCENT_RANK() OVER (PARTITION BY department ORDER BY salary) as top_ten_percent
+ PERCENT_RANK() OVER (PARTITION BY department ORDER BY salary) as top_percent
 FROM employee_salaries
-WHERE tenure > 3)
+WHERE tenure >= 3)
 
 SELECT employee_id, salary, department
 FROM cte
-WHERE salary > top_ten_percent 
+WHERE top_percent >= .90
 AND DEPARTMENT IN (SELECT department
 FROM employee_salaries
 GROUP BY department
 HAVING COUNT(DISTINCT employee_id) > 5)
-;
 
--- Oracle Solution:
-WITH cte AS (
-  SELECT 
-    employee_id, 
-    salary, 
-    department, 
-    PERCENT_RANK() OVER (PARTITION BY department ORDER BY salary) as top_ten_percent
-  FROM employee_salaries
-  WHERE tenure > 3
-)
 
-SELECT 
-  employee_id, 
-  salary, 
-  department
+
+--MySQL and Oracle Solution:
+with cte as (SELECT employee_id, salary, department, 
+ PERCENT_RANK() OVER (PARTITION BY department ORDER BY salary) as top_percent
+FROM employee_salaries
+WHERE tenure >= 3)
+
+SELECT employee_id, salary, department
 FROM cte
-WHERE top_ten_percent < .10
-AND department IN (
-SELECT department FROM employee_salaries
+WHERE top_percent >= .90
+AND DEPARTMENT IN (SELECT department
+FROM employee_salaries
 GROUP BY department
-HAVING count(distinct employee_id)>5)
+HAVING COUNT(DISTINCT employee_id) > 5)
+
+
 
 
 --Python Solution:
@@ -74,6 +53,6 @@ df['salary_10_percent'] = df.groupby('department')['salary'].transform(lambda x:
 
 # Calculate the count of distinct employee_id within each department and create a new column
 df['dept_count'] = df.groupby('department')['employee_id'].transform('nunique')
-filter_df = df[(df['salary'] > df['salary_10_percent']) & (df['tenure'] > 3) & (df['dept_count']> 4)]
+filter_df = df[(df['salary'] > df['salary_10_percent']) & (df['tenure'] >= 3) & (df['dept_count']> 5)]
 
 filter_df[['employee_id', 'salary', 'department']]
