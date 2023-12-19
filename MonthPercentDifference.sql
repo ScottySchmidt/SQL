@@ -6,7 +6,7 @@ The output should include the year-month date (YYYY-MM) and percentage change, r
 The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.
 */ 
 
---MySql and SQL Server
+--MySql and SQL Server Solution:
 WITH amazon_sales AS (
     SELECT
         LEFT(created_at, 7) AS FormattedMonth,
