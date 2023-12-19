@@ -7,32 +7,18 @@ Output payment details along with the corresponding employee name.
 Order records by the employee name in ascending order
 */
 
---- MySQL, Oracle and SqlServer Solution. 
---- Pivot tables are important, this creates a pivot table without using PIVOT
---- This problem is labeled 'hard' but more so medium, but pivot tables are very practical. 
-SELECT employeename, year,
-max(totalpaybenefits) as high_pay
-FROM sf_public_salaries
-WHERE year in (2011, 2012, 2013, 2014)
-GROUP BY id, employeename, year  -- GROUP BY is in case two people have exact same name.
-ORDER BY employeename asc
-
-
---When possible, this method above is easier than using the pivot from Microsoft docs: 
-  SELECT <non-pivoted column>,  
-    [first pivoted column] AS <column name>,  
-    [second pivoted column] AS <column name>,  
-    ...  
-    [last pivoted column] AS <column name>  
-FROM  
-    (<SELECT query that produces the data>)   
-    AS <alias for the source query>  
-PIVOT  
-(  
-    <aggregation function>(<column being aggregated>)  
-FOR   
-[<column that contains the values that will become column headers>]   
-    IN ( [first pivoted column], [second pivoted column],  
-    ... [last pivoted column])  
-) AS <alias for the pivot table>  
-<optional ORDER BY clause>;  
+--- Sql Server Solution using Microsoft Docs:
+SELECT employeename,
+    COALESCE([2011], 0) AS [2011],
+    COALESCE([2012], 0) AS [2012],
+    COALESCE([2013], 0) AS [2013],
+    COALESCE([2014], 0) AS [2014]
+FROM (
+    SELECT employeename, year, totalpay
+    FROM sf_public_salaries
+    WHERE year in (2011, 2012, 2013, 2014)
+) AS pivot_table 
+PIVOT (
+    MAX(totalpay) FOR Year IN ([2011], [2012], [2013], [2014])
+) AS PivotTable
+ORDER BY employeename;
