@@ -6,26 +6,6 @@ Output the year-month (YYYY-MM) and 3-month rolling average of revenue, sorted f
 A 3-month rolling average is defined by calculating the average total revenue from all user purchases for the current month and previous two months. The first two months will not be a true 3-month rolling average since we are not given data from last year. Assume each month has at least one purchase.
 */
 
----Sql Server
-with amazon_revenue as (
-SELECT FORMAT(CAST(created_at AS DATE), 'yyyy-MM') AS YearMonth, purchase_amt 
-FROM amazon_purchases
-WHERE purchase_amt  >0),
-
-amazon_month_revenue as (SELECT YearMonth, 
-sum(purchase_amt) as revenue
-FROM amazon_revenue
-GROUP BY YearMonth
-)
-
-SELECT YearMonth, AVG(revenue) OVER (ORDER BY YearMonth ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) as ThreeMonthAverageSales
-FROM amazon_month_revenue;
-
-
-YearMonth	ThreeMonthAverageSales
-2020-01	26292
-2020-02	23493
-2020-03	25535
 
 --My SQL has a different date_format:
 with amazon_revenue as (
@@ -41,6 +21,11 @@ GROUP BY YearMonth
 
 SELECT YearMonth, AVG(revenue) OVER (ORDER BY YearMonth ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) as ThreeMonthAverageSales
 FROM amazon_month_revenue;
+
+YearMonth	ThreeMonthAverageSales
+2020-01	26292
+2020-02	23493
+2020-03	25535
 
 
 --- Python
