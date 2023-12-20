@@ -5,18 +5,26 @@ The output should contain the week number of that Friday and average amount spen
 https://platform.stratascratch.com/coding/10358-friday-purchases?code_type=5
 */
 
----Sql Server 
-with cte as (SELECT user_id, date, amount_spent, day_name
-, DATEPART(WEEK, date) AS WeekNumber 
+---Sql Server Solution:
+with cte as (SELECT user_id, date, 
+amount_spent, day_name, DATEPART(WEEK, date) AS WeekNumber 
 FROM user_purchases
 WHERE day_name = 'Friday' 
 AND MONTH(date) IN (1, 2, 3) 
 AND year(date) ='2023'
+),
+
+WeekCTE AS (
+  SELECT TOP 13
+    ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS WeekNumber
+  FROM sys.objects
 )
 
-SELECT WeekNumber , avg(amount_spent) as avg_spent
-FROM cte
-GROUP BY WeekNumber 
+SELECT WeekCTE.WeekNumber, COALESCE(avg(amount_spent), 0)
+FROM WeekCTE
+LEFT JOIN cte 
+ON cte.WeekNumber = WeekCTE.WeekNumber
+GROUP BY WeekCTE.WeekNumber
 
 
 --MySQL Solution, cannot use DATEPART above as thats sqlsever only
