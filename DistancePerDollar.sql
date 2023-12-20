@@ -8,15 +8,21 @@ Distance-per-dollar is defined as the distance traveled divided by the cost of t
 You should also count both success and failed request_status as the distance and cost values are populated for all ride requests. Also, assume that all dates are unique in the dataset. Order your results by earliest request date first.
 */
 
+-- SQL Server Solution: 
+-- Create request_date to a year-month (YYYY-MM):
 with uber as(SELECT 
     request_date, 
     CONCAT(YEAR(CONVERT(DATETIME, request_date)), '-', FORMAT(CONVERT(DATETIME, request_date), 'MM')) AS year_month, 
     ROUND(distance_to_travel / monetary_cost, 2) AS distance_per_dollar
-FROM 
-    uber_request_logs
-    )
+    FROM  uber_request_logs
+    ),
     
-    SELECT request_date, year_month, distance_per_dollar,
+    --- absolute average difference in distance-per-dollar (Absolute value to be rounded to the 2nd decimal
+    uber2 as (SELECT year_month,
     round(ABS(distance_per_dollar - AVG(distance_per_dollar) OVER (PARTITION BY year_month)), 2) AS difference_from_average
-    FROM uber
-    ORDER BY request_date;
+    FROM uber )
+    
+    --get the average and correct columns with final table:
+    SELECT year_month, avg(difference_from_average) 
+    FROM uber2
+    GROUP BY year_month
