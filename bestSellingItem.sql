@@ -6,6 +6,7 @@ The best selling item is calculated using the formula (unitprice * quantity).
 Output the month, the description of the item along with the amount paid.
 */
 
+-- Create temp table with monthly sales data
 with month_sales as ( 
 select stockcode, description, sum(quantity*unitprice) as month_total,
 month(invoicedate) as month 
@@ -14,9 +15,11 @@ GROUP BY stockcode, description, month(invoicedate)
 )
 
 SELECT 
-    LPAD(month, 2, '0') as month,  -- Not needed, but this makes month 01 instead of 1
+    -- Gets month as two digits, not one
+    LPAD(month, 2, '0') as month,  
+    -- Subquery to get the descrioion that matches the max month_total
     (SELECT description FROM month_sales WHERE month = m.month AND month_total = MAX(m.month_total)) as description,
-    MAX(month_total) as total_paid  -- Gets the correct description to match
+    MAX(month_total) as total_paid  
 FROM month_sales m
 GROUP BY month
 ORDER BY month;
