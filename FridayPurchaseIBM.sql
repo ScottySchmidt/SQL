@@ -6,7 +6,7 @@ https://platform.stratascratch.com/coding/10358-friday-purchases?code_type=5
 */
 
 ---Sql Server Solution:
-with cte as (SELECT user_id, date, 
+with sales_data as (SELECT user_id, date, 
 amount_spent, day_name, DATEPART(WEEK, date) AS WeekNumber 
 FROM user_purchases
 WHERE day_name = 'Friday' 
@@ -14,12 +14,14 @@ AND MONTH(date) IN (1, 2, 3)
 AND year(date) ='2023'
 ),
 
+-- Create WeekNumbers 1 to 13 in this case so we can match if WeekNumber null within sales_data:
 WeekCTE AS (
   SELECT TOP 13
     ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS WeekNumber
   FROM sys.objects
 )
-
+  
+-- Select WeekNumber with average amount_spent, handling null values with 0:
 SELECT WeekCTE.WeekNumber, COALESCE(avg(amount_spent), 0)
 FROM WeekCTE
 LEFT JOIN cte 
