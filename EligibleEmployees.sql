@@ -9,14 +9,16 @@ The output should include the Employee ID, Salary, and Department of the employe
 https://platform.stratascratch.com/coding/10359-eligible-employees?code_type=3
 */
 
---SQL Server Solution:
-with cte as (SELECT employee_id, salary, department, 
+--SQL Server Solution, Youtube https://www.youtube.com/watch?v=nWOseJhdxNg
+--Create an emp_table that ranks salary by department and tenure:
+with emp_table as (SELECT employee_id, salary, department, 
  PERCENT_RANK() OVER (PARTITION BY department ORDER BY salary) as top_percent
 FROM employee_salaries
 WHERE tenure >= 3)
 
+ -- Have a second subquery that finds departments bigger than five:
 SELECT employee_id, salary, department
-FROM cte
+FROM emp_table
 WHERE top_percent >= .90
 AND DEPARTMENT IN (SELECT department
 FROM employee_salaries
