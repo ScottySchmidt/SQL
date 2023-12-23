@@ -8,19 +8,19 @@ A 3-month rolling average is defined by calculating the average total revenue fr
 
 --MySQL Solution first solution:
 -- Create temp table with revenue using DATE_FORMAT 
-with amazon_revenue as (
+with revenue_table as (
 SELECT DATE_FORMAT(created_at, '%Y-%m') AS YearMonth, purchase_amt 
 FROM amazon_purchases
 WHERE purchase_amt  >0),
 -- Group revenue by YearMonth 
-amazon_month_revenue as (SELECT YearMonth, 
+month_revenue_table as (SELECT YearMonth, 
 sum(purchase_amt) as revenue
 FROM amazon_revenue
 GROUP BY YearMonth
 )
 --Create the report with three month rolling average:
 SELECT YearMonth, AVG(revenue) OVER (ORDER BY YearMonth ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) as ThreeMonthAverageSales
-FROM amazon_month_revenue;
+FROM month_revenue_table;
 
 
 -- MySQL most concise solution, Execution time: 0.00542 seconds, allmost same time as above:
