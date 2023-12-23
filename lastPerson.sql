@@ -27,5 +27,4 @@ WHERE running_total < 1001
 ORDER BY running_total DESC
 LIMIT 1
 
---- There is likely a faster way this this way is simple and easy to understand.
 
