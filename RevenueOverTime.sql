@@ -23,14 +23,13 @@ SELECT YearMonth, AVG(revenue) OVER (ORDER BY YearMonth ROWS BETWEEN 2 PRECEDING
 FROM month_revenue_table;
 
 
--- MySQL most concise solution, Execution time: 0.00542 seconds, allmost same time as above:
-select date, avg(purchase_amt) over (order by date rows 2 preceding) as rolling_avg
-from
-(select date_format(created_at,'%Y-%m') date, 
+-- MySQL second solution, more concise 50% less lines:
+select YearMonth, avg(purchase_amt) over (order by YearMonth rows 2 preceding) as rolling_avg
+FROM (select date_format(created_at,'%Y-%m') YearMonth, 
 sum(purchase_amt) purchase_amt
 FROM amazon_purchases
 WHERE purchase_amt >0
-GROUP BY date) purchase_table
+GROUP BY YearMonth) purchase_table
 
 /*
 MySQL OUTPUT
