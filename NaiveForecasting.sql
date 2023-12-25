@@ -12,31 +12,23 @@ RMSE is defined as sqrt(mean(square(actual - forecast)). Report out the RMSE rou
 */
 
 -- SQL Server and MySQL: 
-with cte as ( SELECT month(request_date) as month,
-round(avg(distance_to_travel/monetary_cost),2) as distance_per_dollar
-FROM uber_request_logs
-GROUP BY month(request_date)
+WITH MonthlyMetrics AS (
+    SELECT
+        MONTH(request_date) AS month,
+        SUM(distance_to_travel) AS total_distance,
+        SUM(monetary_cost) AS total_cost
+    FROM uber_request_logs
+    GROUP BY MONTH(request_date)
 ),
-  
--- Naive Forecasting uses the 'last month' as a future predictor. Therefore, LAG function needed:
-cte2 as (SELECT month, distance_per_dollar,
-COALESCE(lag(distance_per_dollar) OVER(ORDER BY month ASC),0) as prior_month_average  --COALESCE will fill in 0 if empty
-FROM cte)
-
-SELECT month, SQRT(POWER(distance_per_dollar-prior_month_average, 2)) as RMSE --technically avg_RMSE
-FROM cte2
-
-/*
-Above code generates the report by month like below:
-month	RMSE
-1	7.44
-2	1.36
-3	0.53
-4	3.49
-5	4.46
-6	0.2
-7	4.53
-8	10.8
-9	11.7
-10	0.86
-*/
+-- Use Lag to get the previous month: 
+NaiveForecast AS (
+    SELECT
+        month,
+        total_distance / total_cost AS actual_value,
+        LAG(total_distance / total_cost, 1) OVER (ORDER BY month) AS forecasted_value
+    FROM MonthlyMetrics
+)
+-- Calculate error of actual versus predicted value:
+SELECT
+    ROUND(SQRT(AVG(POWER(actual_value - forecasted_value, 2))), 2) AS rmse
+FROM NaiveForecast;
