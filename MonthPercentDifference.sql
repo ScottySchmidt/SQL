@@ -6,6 +6,7 @@ The output should include the year-month date (YYYY-MM) and percentage change, r
 The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.
 */ 
 
+--YouTube Solution: https://www.youtube.com/watch?v=X09qT8y3pSI
 --MySql and SQL Server Solution:
 WITH month_table AS (
     SELECT
