@@ -15,7 +15,8 @@ RMSE is defined as sqrt(mean(square(actual - forecast)).
 Report out the RMSE rounded to the 2nd decimal spot.
 */
 
--- SQL Server and MySQL: 
+-- SQL Server and MySQL 
+---YouTube solution: https://www.youtube.com/watch?v=8PP3oKxd1x8: 
 WITH MonthlyMetrics AS (
     SELECT
         MONTH(request_date) AS month,
