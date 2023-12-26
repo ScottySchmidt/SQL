@@ -7,25 +7,19 @@ The percentage change column will be populated from the 2nd month forward and ca
 */ 
 
 --MySql and SQL Server Solution:
-WITH amazon_sales AS (
+WITH month_table AS (
     SELECT
         LEFT(created_at, 7) AS FormattedMonth,
-        sum(value) as month_sales
+        SUM(value) AS month_sales
     FROM
         sf_transactions
     GROUP BY LEFT(created_at, 7)
-), 
+)
 
-amazon_variance as(SELECT
+SELECT
     FormattedMonth,
-    month_sales,
-    lag(month_sales, 1) OVER (ORDER BY FormattedMonth) as prev_month_sales
-FROM
-    amazon_sales
-    )
-    
-    SELECT FormattedMonth,
-    100.00*(month_sales - prev_month_sales)/prev_month_sales
+    round(100.00 * (month_sales - LAG(month_sales, 1) OVER (ORDER BY FormattedMonth)) / LAG(month_sales, 1) OVER (ORDER BY FormattedMonth),2) AS sales_variance
+FROM month_table;sales)/prev_month_sales
     FROM amazon_variance;
 
 
