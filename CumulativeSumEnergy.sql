@@ -4,6 +4,8 @@ Calculate the running total (i.e., cumulative sum) energy consumption of the Met
 Output the date, running total energy consumption, and running total percentage rounded to the nearest whole number.
 */
 
+--YouTube: https://www.youtube.com/watch?v=E3j-tcKdnqc
+
 --MySQL Solution:
 with all_data as (
 select date, consumption from fb_eu_energy
