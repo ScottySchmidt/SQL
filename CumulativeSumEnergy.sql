@@ -5,17 +5,17 @@ Output the date, running total energy consumption, and running total percentage 
 */
 
 --MySQL Solution:
-with data_table as (
-select * from fb_eu_energy
+with all_data as (
+select date, consumption from fb_eu_energy
 union all
-select * from fb_na_energy
+select date, consumption from fb_na_energy
 union all
-select * from fb_asia_energy
+select date, consumption from fb_asia_energy
 ),
 
 daily_energy as(SELECT date,
 sum(consumption) as total
-FROM data_table
+FROM all_data
 GROUP BY date
 ORDER BY date
 )
