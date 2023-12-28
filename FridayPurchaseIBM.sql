@@ -5,6 +5,8 @@ The output should contain the week number of that Friday and average amount spen
 https://platform.stratascratch.com/coding/10358-friday-purchases?code_type=5
 */
 
+--YouTube Solution: https://www.youtube.com/watch?v=Nwa4jyIUwU0
+
 ---Sql Server Solution:
 with cte as (SELECT user_id, date, 
 amount_spent, day_name, DATEPART(WEEK, date) AS WeekNumber 
