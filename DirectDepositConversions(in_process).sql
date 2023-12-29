@@ -7,8 +7,29 @@ To identify a payroll direct deposit transaction, we look for members who are ge
 •	The amounts of these transactions should differ by no more than $25.
 Identify the members converting to direct deposit and the date of conversion. The date of conversion should be the earliest date of the direct deposit transaction that meets these criteria.
 */
--- SQL Server Solution:
--- EmployerTransactions temp table getting next transaction date and amount through employer
+
+-- Self join SQL Server Solution:
+with payroll as
+(
+select a.user_id, a.employer, b.transaction_date
+from dd_transactions a
+join dd_transactions b
+ON a.user_id = b.user_id
+AND datediff(day, a.transaction_date, b.transaction_date) < 30
+AND abs(a.transaction_amount-b.transaction_amount)<=25 
+AND a.transaction_date < b.transaction_date
+AND a.employer = b.employer
+)
+
+SELECT user_id, employer, 
+min(transaction_date) as conversion_date
+FROM payroll
+GROUP BY user_id, employer
+ORDER BY user_id, employer
+
+
+    
+-- SQL Server Solution below without self join is complex, currently not correct:
 WITH EmployerTransactions AS (
     SELECT
         user_id, employer,
@@ -18,8 +39,6 @@ WITH EmployerTransactions AS (
         LEAD(transaction_date) OVER (PARTITION BY employer ORDER BY transaction_date) AS next_transaction_date
     FROM dd_transactions
 )
-
---- Get the user_id, employer and date if differences no more than 25 and within 30-day period:
 SELECT user_id, employer, transaction_date
 FROM EmployerTransactions
 WHERE
