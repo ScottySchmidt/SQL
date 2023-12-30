@@ -5,6 +5,7 @@ Include only records where non-paying customers have more downloads than paying 
 The output should be sorted by earliest date first and contain 3 columns date, non-paying downloads, paying downloads.
 */
 
+--YouTube Solution: https://www.youtube.com/watch?v=bZQI-gXQBDk
 with cte as (SELECT d.date, d.downloads, 
 a.paying_customer
 FROM ms_user_dimension u
