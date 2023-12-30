@@ -13,10 +13,14 @@ As a search ID can contain more than one search term, select the highest rating 
 Example: The search_id 1 was clicked (clicked = 1) and its position is outside of the top 3 positions (search_results_position = 5), therefore its rating is 2.
 */
 
-SELECT search_id, search_term, clicked, search_results_position,
-CASE 
-WHEN clicked = 0 THEN 1
+with cte  as (SELECT search_id, 
+case WHEN clicked = 0 THEN 1
 WHEN clicked = 1 AND search_results_position > 3 THEN 2
-WHEN clicked = 1 AND search_results_position < 3 THEN 3
+WHEN clicked = 1 AND search_results_position <= 3 THEN 3
 END as rating
-FROM fb_search_events;
+FROM fb_search_events
+)
+
+SELECT search_id, max(rating) as best_rating
+FROM cte
+GROUP BY search_id
