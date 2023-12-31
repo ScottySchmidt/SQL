@@ -1,5 +1,5 @@
 /*
-Distance Per Dollar, Uber Hard question: https://platform.stratascratch.com/coding/10302-distance-per-dollar?code_type=5
+Distance Per Dollar, Hard SQL Uber: https://platform.stratascratch.com/coding/10302-distance-per-dollar?code_type=5
 
 You’re given a dataset of uber rides with the traveling distance (‘distance_to_travel’) and cost (‘monetary_cost’) for each ride. 
 First, find the difference between the distance-per-dollar for each date and the average distance-per-dollar for that year-month. 
@@ -10,9 +10,8 @@ You should also count both success and failed request_status as the distance and
 
 -- SQL Server Solution: 
 -- Create request_date to a year-month (YYYY-MM):
-with uber as(SELECT 
-    request_date, 
-    CONCAT(YEAR(CONVERT(DATETIME, request_date)), '-', FORMAT(CONVERT(DATETIME, request_date), 'MM')) AS year_month, 
+with uber as(SELECT request_date, 
+    FORMAT(CONVERT(DATETIME, request_date), 'yyyy-MM') AS year_month,
     ROUND(distance_to_travel / monetary_cost, 2) AS distance_per_dollar
     FROM  uber_request_logs
     ),
