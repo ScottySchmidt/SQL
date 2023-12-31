@@ -15,13 +15,25 @@ with uber as(SELECT request_date,
     ROUND(distance_to_travel / monetary_cost, 2) AS distance_per_dollar
     FROM  uber_request_logs
     ),
+     --- absolute average difference in distance-per-dollar (Absolute value to be rounded to the 2nd decimal
+    uber2 as (SELECT year_month,
+    round(ABS(distance_per_dollar - AVG(distance_per_dollar) OVER (PARTITION BY year_month)), 2) AS difference_from_average
+    FROM uber )
+    --get the average and correct columns with final table:
+    SELECT year_month, avg(difference_from_average) 
+    FROM uber2
+    GROUP BY year_month
+
+
+-- MySQL Solution:    
+with uber as(SELECT request_date, 
+    FORMAT(CONVERT(DATETIME, request_date), 'yyyy-MM') AS year_month,
+    ROUND(distance_to_travel / monetary_cost, 2) AS distance_per_dollar
+    FROM  uber_request_logs
+    ),
     
     --- absolute average difference in distance-per-dollar (Absolute value to be rounded to the 2nd decimal
     uber2 as (SELECT year_month,
     round(ABS(distance_per_dollar - AVG(distance_per_dollar) OVER (PARTITION BY year_month)), 2) AS difference_from_average
     FROM uber )
     
-    --get the average and correct columns with final table:
-    SELECT year_month, avg(difference_from_average) 
-    FROM uber2
-    GROUP BY year_month
