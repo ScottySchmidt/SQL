@@ -37,8 +37,3 @@ SELECT DISTINCT title, budget, prorated_employee_expense
 FROM variance
 WHERE prorated_employee_expense > budget
 ORDER BY title
-
-SELECT title, budget, prorated_employee_expense
-FROM variance
-WHERE prorated_employee_expense > budget
-;
