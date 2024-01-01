@@ -10,6 +10,7 @@ Salary is defined on a yearly basis, so be careful how to calculate salaries for
 Output a list of projects that are overbudget with their project name, project budget, and prorated total employee expense (rounded to the next dollar amount).
 HINT: to make it simpler, consider that all years have 365 days. You don't need to think about the leap years.
 */
+--YouTube Solution: https://www.youtube.com/watch?v=V3xYTia38Qs
 
 -- SQL Server Solution:
 with budgets as(SELECT p.title, p.budget,
