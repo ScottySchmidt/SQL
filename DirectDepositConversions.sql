@@ -15,12 +15,15 @@ select a.user_id, a.employer, b.transaction_date
 from dd_transactions a
 join dd_transactions b
 ON a.user_id = b.user_id
+AND a.employer = b.employer
 AND datediff(day, a.transaction_date, b.transaction_date) < 30
 AND abs(a.transaction_amount-b.transaction_amount)<=25 
 AND a.transaction_date < b.transaction_date
-AND a.employer = b.employer
-)
-
+AND a.user_id IN (SELECT user_id
+FROM dd_transactions
+GROUP BY user_id, month(transaction_date)
+HAVING sum(transaction_amount) >= 200)
+)    
 SELECT user_id, employer, 
 min(transaction_date) as conversion_date
 FROM payroll
