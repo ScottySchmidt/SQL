@@ -4,7 +4,25 @@ The worst business has the most violations during the year.
 You should output the year, business name, and number of violations.
 */ 
 
---SQL Server and MySQL gets 75% of solution correct:
+--SQL Server and MySQL Solution:
+with cte as (SELECT business_name, year(inspection_date) as inspect_year, COUNT(DISTINCT violation_id) as violation_count
+FROM sf_restaurant_health_violations
+GROUP BY business_name, year(inspection_date)
+),
+
+cte2 as (
+SELECT inspect_year, business_name, violation_count, 
+RANK()OVER(PARTITION BY inspect_year ORDER BY violation_count DESC) as rk
+FROM cte
+)
+
+SELECT inspect_year, business_name, violation_count
+FROM cte2
+WHERE rk=1
+
+
+-- SQL Server and MySQL gets 75% of solution correct because you must count by DISTINCT violation_id not business_name.
+-- One entry got recorded twice 
 with business as (SELECT business_name, year(inspection_date) as inspect_year, COUNT(business_name) as violations_count
 FROM sf_restaurant_health_violations
 GROUP BY business_name, year(inspection_date)
