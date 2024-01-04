@@ -8,7 +8,7 @@ To identify a payroll direct deposit transaction, we look for members who are ge
 Identify the members converting to direct deposit and the date of conversion. The date of conversion should be the earliest date of the direct deposit transaction that meets these criteria.
 */
 
--- Self join SQL Server Solution:
+-- YouTube Solution,Self join SQL Server Solution: https://www.youtube.com/watch?v=lvF6o7qDkvQ
 with payroll as
 (
 select a.user_id, a.employer, b.transaction_date
