@@ -9,30 +9,19 @@ https://platform.stratascratch.com/coding/10069-correlation-between-e-mails-and-
 */
 
 --Since SQL Server and MySQL has no CORR function, I will be using Oracle. Note: Doing this in Python way easier since Python is build for statistics
-
--- Current first solution is close but incorrect:
-with cte as(select DISTINCT f.user_id, f.session_id as session_id, f.day as f_day, 
-COALESCE(e.day,0) as e_day
-from google_fit_location f
-LEFT JOIN google_gmail_emails e
-ON e.to_user = f.user_id
-AND e.day = f.day
+WITH cte AS (
+    SELECT day, to_user, COUNT(*) AS c1
+    FROM google_gmail_emails
+    GROUP BY day, to_user
 ),
-
-email_cte as(
-SELECT e_day, count(user_id) as num_emails
-FROM cte
-GROUP BY e_day
-),
-
-fit_cte as(SELECT f_day, count(DISTINCT session_id) as fit_count
-FROM cte
-GROUP BY f_day
+cte2 AS (
+    SELECT day, user_id, COUNT(distinct session_id) AS c2
+    FROM google_fit_location
+    GROUP BY day, user_id
 )
 
-SELECT corr(f.fit_count, e.num_emails) as corr 
-FROM fit_cte f
-FULL OUTER JOIN email_cte e
-ON e.e_day = f.f_day
-
-
+SELECT corr(COALESCE(a.c1,0), COALESCE(b.c2,0))
+FROM cte a
+FULL OUTER JOIN cte2 b 
+ON a.day = b.day
+AND a.to_user = b.user_id
