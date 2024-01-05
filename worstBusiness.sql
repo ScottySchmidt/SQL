@@ -4,7 +4,7 @@ The worst business has the most violations during the year.
 You should output the year, business name, and number of violations.
 */ 
 
---YouTube Solution: https://www.youtube.com/watch?v=EJXAwO5q-ZA
+--YouTube Solution: https://www.youtube.com/watch?v=cmi85lVZtPs
 --SQL Server and MySQL Solution:
 with cte as (SELECT business_name, year(inspection_date) as inspect_year, COUNT(DISTINCT violation_id) as violation_count
 FROM sf_restaurant_health_violations
