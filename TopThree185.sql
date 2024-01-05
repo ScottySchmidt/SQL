@@ -7,7 +7,7 @@ A high earner in a department is an employee who has a salary in the top three u
 Write an SQL query to find the employees who are high earners in each of the departments.
 */
 
---SQL Server Solution beats 79% runtime:
+-- SQL Server Solution beats 79% runtime: https://www.youtube.com/watch?v=JKWqHmUvT2w
 with emp_data as (SELECT d.name as Department, e.name as Employee, e.salary as Salary,
 e.departmentId as dept_id, 
 dense_rank() OVER(PARTITION BY e.departmentId ORDER BY e.salary DESC) as d_rank
