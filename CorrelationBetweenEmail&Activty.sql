@@ -8,6 +8,7 @@ The total exercise per day is calculated by counting the number of user sessions
 https://platform.stratascratch.com/coding/10069-correlation-between-e-mails-and-activity-time?code_type=7
 */
 
+-- YouTube Solution: https://www.youtube.com/watch?v=x08iNjp2r8g&feature=youtu.be
 --Since SQL Server and MySQL has no CORR function, I will be using Oracle. Note: Doing this in Python way easier since Python is build for statistics
 WITH cte AS (
     SELECT day, to_user, COUNT(*) AS c1
