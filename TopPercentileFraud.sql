@@ -1,5 +1,5 @@
 /*
-Top Percentile Fraud: 
+Top Percentile Fraud, Hard SQL: 
 ABC Corp is a mid-sized insurer in the US and in the recent past their fraudulent claims have increased significantly for their personal auto insurance portfolio. 
 They have developed a ML based predictive model to identify propensity of fraudulent claims. 
 Now, they assign highly experienced claim adjusters for top 5 percentile of claims identified by the model.
@@ -8,7 +8,7 @@ Your output should be policy number, state, claim cost, and fraud score.
 https://platform.stratascratch.com/coding/10303-top-percentile-fraud?code_type=5
 */
 
----SQL Server
+---SQL Server, Youtube Solution: https://www.youtube.com/watch?v=O7K35Ff-j5c
 SELECT
   state,
   claim_cost,
