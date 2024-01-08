@@ -10,6 +10,7 @@ You'll want to remove these posts from the result.
 https://platform.stratascratch.com/coding/10297-comments-distribution?code_type=3
 */
 
+--YouTube Solution: https://www.youtube.com/watch?v=iNyyT7QIMAs&feature=youtu.be
 --SQL Server and MySQL Solution:
 
 -- create user table with date requirements
