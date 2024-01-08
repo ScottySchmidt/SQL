@@ -8,12 +8,8 @@ Your output should be policy number, state, claim cost, and fraud score.
 https://platform.stratascratch.com/coding/10303-top-percentile-fraud?code_type=5
 */
 
----SQL Server, Youtube Solution: https://www.youtube.com/watch?v=O7K35Ff-j5c
-SELECT
-  state,
-  claim_cost,
-  policy_num,
-  fraud_score
+---SQL Server, Youtube Solution: https://www.youtube.com/watch?v=P6r5po62CUQ
+SELECT state, claim_cost, policy_num, fraud_score
 FROM (
   SELECT
     state,
