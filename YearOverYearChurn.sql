@@ -7,7 +7,7 @@ Output the year (specifically, you can use the year the driver left Lyft) along 
 and an indication on whether the number has been increased (output the value 'increase'), decreased (output the value 'decrease') or stayed the same (output the value 'no change').
 */
 
--- SQL Server Solution:
+-- YouTube Solution! https://www.youtube.com/watch?v=JQ7uKUbStdQ
 WITH cte AS (
     SELECT COUNT([index]) AS total_churns, YEAR(end_date) AS end_year
     FROM lyft_drivers
