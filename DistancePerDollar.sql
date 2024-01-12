@@ -10,7 +10,7 @@ You should also count both success and failed request_status as the distance and
 Also, assume that all dates are unique in the dataset. Order your results by earliest request date first.
 */
 
--- YouTube Solution: https://www.youtube.com/watch?v=oQOlDXiHS_U
+-- YouTube Solution: https://www.youtube.com/watch?v=YCOBbaQGgwA
 -- Solution without a window function, easy to understand: 
 with daily as (SELECT FORMAT(CONVERT(DATETIME, request_date), 'yyyy-MM') AS year_month,
 round(distance_to_travel/monetary_cost, 2) as dist_per_dollar
