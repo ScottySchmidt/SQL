@@ -9,23 +9,31 @@ Only output these territories that had any sales in both quarters.
 */
 
 WITH q3 AS (
-    SELECT s.cust_id, t.territory_id,
-           SUM(s.order_value) AS total_sales
+    SELECT t.territory_id,
+           SUM(s.order_value) AS total_sales_q3
     FROM fct_customer_sales s
     INNER JOIN map_customer_territory t
     USING (cust_id)
     WHERE YEAR(order_date) = 2021
     AND EXTRACT(QUARTER FROM order_date) = 3
-    GROUP BY s.cust_id, t.territory_id
+    GROUP BY t.territory_id
 ),
 q4 AS (
-    SELECT s.cust_id, t.territory_id,
-           SUM(s.order_value) AS total_sales
+    SELECT t.territory_id,
+           SUM(s.order_value) AS total_sales_q4
     FROM fct_customer_sales s
     INNER JOIN map_customer_territory t
     USING (cust_id)
     WHERE YEAR(order_date) = 2021
     AND EXTRACT(QUARTER FROM order_date) = 4
+    GROUP BY t.territory_id
+)
+
+SELECT 
+    q3.territory_id,
+    (q4.total_sales_q4 - q3.total_sales_q3) / q3.total_sales_q3 * 100 AS sales_growth
+FROM q3
+JOIN q4 ON q3.territory_id = q4.territory_id; 4
     GROUP BY s.cust_id, t.territory_id
 ),
 
