@@ -8,6 +8,7 @@ Output the ID of the Territory and the Sales Growth.
 Only output these territories that had any sales in both quarters.
 */
 
+-- YouTube Solution: https://www.youtube.com/watch?v=Fpa1As5TgB0
 WITH q3 AS (
     SELECT t.territory_id,
            SUM(s.order_value) AS total_sales_q3
