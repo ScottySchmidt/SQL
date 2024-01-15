@@ -1,5 +1,5 @@
 /*
-Google Fit User Tracking, Hard SQL StrataSratch Affiliate:
+Google Fit User Tracking, Hard SQL, StrataSratch Affiliate:
 Find the average session distance travelled by Google Fit users based on GPS location data.
 Calculate the distance for two scenarios:
 Taking into consideration the curvature of the earth
@@ -11,8 +11,7 @@ Assume that session can't span over multiple days.
 Output the average session distances calculated in the two scenarios and the difference between them.
 
 Formula to calculate the distance with the curvature of the earth:
-/*
-
+*/
 
 with m1 as(SELECT user_id, session_id, day, count(*) as step_count
 FROM google_fit_location
