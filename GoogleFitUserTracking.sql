@@ -13,6 +13,7 @@ Output the average session distances calculated in the two scenarios and the dif
 Formula to calculate the distance with the curvature of the earth:
 */
 
+-- YouTube Solution: https://www.youtube.com/watch?v=wbofjfiu6aQ
 with m1 as(SELECT user_id, session_id, day, count(*) as step_count
 FROM google_fit_location
 GROUP BY user_id, session_id, day
