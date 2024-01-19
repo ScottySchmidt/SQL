@@ -39,4 +39,4 @@ class Solution(object):
             w = w +' ' # add a space after word
             answer = str(w) + answer # store answer with the w first
             #print(w)
-        return answer[:-1]
+        return answer[:-1] # remove the final space, not needed 
