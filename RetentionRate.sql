@@ -1,5 +1,7 @@
 /* 
 Retention Rate: Hard Meta/SakesForce SQL StrataSratch
+YouTube Solution! https://www.youtube.com/watch?v=X2QU6xyMq0s
+
 Find the monthly retention rate of users for each account separately for Dec 2020 and Jan 2021. 
 Retention rate is the percentage of active users an account retains over a given period of time.
 In this case, assume the user is retained if he/she stays with the app in any future months. 
