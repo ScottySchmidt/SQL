@@ -1,5 +1,7 @@
 /*
 The Cheapest Airline Connection, Hard SrataScratch, Delta Airlines:
+YouTube Solution! https://www.youtube.com/watch?v=lQwMChm_wow
+
 COMPANY X employees are trying to find the cheapest flights to upcoming conferences. 
 When people fly long distances, a direct city-to-city flight is often more expensive than taking two flights with a stop in a hub city. Travelers might save even more money by breaking the trip into three flights with two stops. But for the purposes of this challenge, let's assume that no one is willing to stop three times! You have a table with individual airport-to-airport flights, which contains the following columns:
 
