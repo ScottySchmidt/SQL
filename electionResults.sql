@@ -1,5 +1,6 @@
 /*
 Election Results - Deloitte and Google - StrataScratch 
+YouTube Solution! 
 
 The election is conducted in a city and everyone can vote for one or more candidates, or choose not to vote at all. 
 Each person has 1 vote so if they vote for multiple candidates, their vote gets equally split across these candidates.
