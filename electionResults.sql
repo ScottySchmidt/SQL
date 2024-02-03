@@ -33,3 +33,23 @@ GROUP BY candidate
 SELECT top 1 candidate
 FROM election
 ORDER BY total_votes DESC
+  
+
+-- Concise SQL Server Solution:
+with num as(SELECT voter, 
+count(candidate) as num_votes
+FROM voting_results
+GROUP BY voter
+),
+election as (SELECT v.candidate, sum(1/n.num_votes) as total_votes
+FROM num n
+INNER JOIN voting_results  v
+ON n.voter = v.voter
+WHERE n.num_votes > 0
+GROUP BY v.candidate
+)
+SELECT top 1 candidate
+FROM election
+ORDER BY total_votes DESC
+
+
